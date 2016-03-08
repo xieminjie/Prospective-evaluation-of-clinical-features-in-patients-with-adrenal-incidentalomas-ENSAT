@@ -5,11 +5,45 @@
     tools:context="com.example.xieminjie.clientapp.Register">
     <include android:id="@+id/main_bar"
         layout="@layout/register_bar"/>
-    <SeekBar
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Male"
+        android:id="@+id/genderSwitch"
+        android:layout_marginTop="74dp"
+        android:checked="false"
+        android:layout_below="@+id/main_bar"
+        android:layout_alignLeft="@+id/age_editText"
+        android:layout_alignStart="@+id/age_editText"
+        />
+    <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar"
-        android:layout_marginTop="120dp"
+        android:inputType="number"
+        android:id="@+id/age_editText"
+        android:layout_marginTop="47dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/genderSwitch"
         android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/diagnosis_editText"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_alignLeft="@+id/age_editText"
+        android:layout_alignStart="@+id/age_editText" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:id="@+id/send_btn"
+        android:layout_below="@+id/diagnosis_editText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="98dp" />
 
 </RelativeLayout>
