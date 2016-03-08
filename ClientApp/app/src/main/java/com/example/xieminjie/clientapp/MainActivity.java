@@ -1,5 +1,6 @@
 package com.example.xieminjie.clientapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,8 +24,12 @@ public class MainActivity extends AppCompatActivity {
         registerTextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(TAG, "register");
+                startToRegister();
             }
         });
+    }
+    private void startToRegister(){
+        Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
     }
 }
