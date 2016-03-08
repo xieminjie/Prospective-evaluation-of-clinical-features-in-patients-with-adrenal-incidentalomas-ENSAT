@@ -4,7 +4,7 @@ package com.example.xieminjie.clientapp;
  * Created by xieminjie on 8/03/2016.
  */
 public class User {
-    private String sex;
+    private String sex="Male";
     private int age;
     private String diagnosis;
     public User(){};

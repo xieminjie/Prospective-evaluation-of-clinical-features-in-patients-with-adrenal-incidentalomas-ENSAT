@@ -8,31 +8,58 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import com.google.gson.Gson;
+
+import java.net.URISyntaxException;
+
+import io.socket.client.IO;
 import io.socket.client.Socket;
 
 public class Register extends AppCompatActivity {
+    private Socket socket;
     private int age;
     private String sex;
     private String diagnosis;
     private Switch genderSwitch;
     private Toolbar toolbar;
     private EditText ageTextFeild;
+    private EditText diagnosisTextFeild;
     private Button sendBtn;
     private User user;
-    private Socket socket;
     public static final String TAG="myActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initInterface();
+        ChatApplication app = (ChatApplication)this.getApplication();
+        socket = app.getSocket();
+        socket.connect();
+        genderSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    genderSwitch.setText("Female");
+                    sex = "Female";
+
+                } else {
+                    genderSwitch.setText("Male");
+                    sex = "Male";
+                }
+            }
+        });
         sendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-               // sendRegisterData(user, socket);
-                Log.d(TAG, "click");
+                age = Integer.parseInt(ageTextFeild.getText().toString());
+                diagnosis = diagnosisTextFeild.getText().toString();
+                user = new User(sex,age,diagnosis);
+                Gson gson = new Gson();
+                String msg = gson.toJson(user);
+                sendRegisterData(msg, socket);
             }
         });
     }
@@ -43,6 +70,7 @@ public class Register extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.WHITE);
         genderSwitch = (Switch)findViewById(R.id.genderSwitch);
         ageTextFeild = (EditText)findViewById(R.id.age_editText);
+        diagnosisTextFeild = (EditText)findViewById(R.id.diagnosis_editText);
         sendBtn = (Button)findViewById(R.id.send_btn);
     }
     @Override
@@ -58,7 +86,7 @@ public class Register extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    private void sendRegisterData(User user,Socket socket){
-
+    private void sendRegisterData(String msg,Socket socket){
+        socket.emit("sendRegisterData",msg);
     }
 }
