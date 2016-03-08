@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">ClientApp</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="register_button">Register</string>
     <string name="action_settings">Settings</string>
 </resources>
