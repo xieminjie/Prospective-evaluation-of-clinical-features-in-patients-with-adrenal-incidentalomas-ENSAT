@@ -5,13 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import io.socket.client.Socket;
 
 public class MainActivity extends AppCompatActivity {
     private Socket socket;
     private String userID;
-    private TextView registerTextBtn;
+    private EditText loginTextField;
+    private Button loginBtn;
     public static final String TAG="myActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,15 +23,16 @@ public class MainActivity extends AppCompatActivity {
         initInterface();
     }
     private void initInterface(){
-        registerTextBtn = (TextView)findViewById(R.id.register_button);
-        registerTextBtn.setOnClickListener(new View.OnClickListener() {
+        loginTextField = (EditText)findViewById(R.id.main_loginTextField);
+        loginBtn = (Button)findViewById(R.id.main_loginBtn);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startToRegister();
+                startToLogin();
             }
         });
     }
-    private void startToRegister(){
+    private void startToLogin(){
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
