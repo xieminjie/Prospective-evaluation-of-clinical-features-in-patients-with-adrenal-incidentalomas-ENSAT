@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.xieminjie.clientapp" >
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".ChatApplication"
         android:allowBackup="true"
@@ -20,6 +22,10 @@
         <activity
             android:name=".Register"
             android:label="@string/title_activity_register" >
+        </activity>
+        <activity
+            android:name=".TabbedDrawer"
+            android:label="@string/title_activity_tabbed_drawer" >
         </activity>
     </application>
 
