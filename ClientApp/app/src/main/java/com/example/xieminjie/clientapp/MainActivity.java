@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         loginBtn = (Button)findViewById(R.id.main_loginBtn);
     }
     private void startToLogin(){
-        Intent intent = new Intent(this, Register.class);
+        Intent intent = new Intent(this, TabbedDrawer.class);
         startActivity(intent);
     }
 }
