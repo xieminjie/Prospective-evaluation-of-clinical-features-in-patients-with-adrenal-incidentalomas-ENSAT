@@ -9,7 +9,7 @@ io.on('connection', function(socket){
   socket.on('send login request', function(msg){
     login.checkUser(msg);
     var result = login.sendReply();
-    socket.emit('register reply',{
+    socket.emit('login reply',{
       result:'stored'
     });
   });
