@@ -1,0 +1,17 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "This is graduate project ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "minjie xie",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4",
+    "gson": "^0.1.5",
+    "mysql": "^2.10.2",
+    "socket.io": "^1.4.5"
+  }
+}
