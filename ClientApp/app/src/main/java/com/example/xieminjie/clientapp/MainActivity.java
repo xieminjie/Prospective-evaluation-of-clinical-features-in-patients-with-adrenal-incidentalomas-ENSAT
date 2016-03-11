@@ -21,7 +21,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ChatApplication app = (ChatApplication)getApplication();
+        socket = app.getSocket();
         initInterface();
+        socket.connect();
     }
     private void initInterface(){
         loginTextField = (EditText)findViewById(R.id.main_loginTextField);
@@ -29,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                startToLogin();
+                userid = loginTextField.getText().toString();
+                socket.emit("send login request",userid);
+                //startToLogin();
             }
         });
     }
