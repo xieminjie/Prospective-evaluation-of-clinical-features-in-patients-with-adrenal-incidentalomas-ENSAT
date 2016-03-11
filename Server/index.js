@@ -7,7 +7,7 @@ var login = require('./login.js');
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('send login request', function(msg){
-    login.checkData(msg);
+    login.checkUser(msg);
     var result = login.sendReply();
     socket.emit('register reply',{
       result:'stored'

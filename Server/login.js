@@ -8,9 +8,7 @@ module.exports = {
 };
 
 function checkUser(msg){
-  var message = JSON.parse(msg);
-  var userid = msg.userid;
-  console.log(userid);
+  console.log(msg);
 }
 function sendReply(){
   return true;

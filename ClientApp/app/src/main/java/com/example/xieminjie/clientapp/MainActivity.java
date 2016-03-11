@@ -27,10 +27,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 userID = loginTextField.getText().toString();
-                socket.emit("send login request",userID);
-                startToLogin();
+                socket.emit("send login request", userID);
+                // startToLogin();
             }
         });
+        socket.connect();
     }
     private void initInterface(){
         loginTextField = (EditText)findViewById(R.id.main_loginTextField);
