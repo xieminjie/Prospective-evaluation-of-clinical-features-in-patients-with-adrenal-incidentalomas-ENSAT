@@ -1,5 +1,6 @@
 package com.example.xieminjie.clientapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 public class MainActivity extends AppCompatActivity {
     private Socket socket;
@@ -21,11 +27,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initInterface();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
         ChatApplication app = (ChatApplication)getApplication();
         socket = app.getSocket();
-        initInterface();
+        socket.on("login reply", loginReply);
         socket.connect();
     }
+
     private void initInterface(){
         loginTextField = (EditText)findViewById(R.id.main_loginTextField);
         loginBtn = (Button)findViewById(R.id.main_loginBtn);
@@ -38,6 +50,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private Emitter.Listener loginReply = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    try {
+                        String result = data.getString("result");
+                        Log.d(TAG,result);
+                    } catch (JSONException e) {
+                        return;
+                    }
+                }
+            });
+        }
+    };
     private void startToLogin(){
         Intent intent = new Intent(this, TabbedDrawer.class);
         startActivity(intent);
