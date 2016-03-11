@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private String userID;
     private EditText loginTextField;
     private Button loginBtn;
+    private String userid;
     public static final String TAG="myActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
                 startToLogin();
             }
         });
