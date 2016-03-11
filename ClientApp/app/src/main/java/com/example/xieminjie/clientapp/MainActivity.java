@@ -33,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void startToLogin(){
-        Intent intent = new Intent(MainActivity.this, TabbedDrawer.class);
-        //startActivity(intent);
-        MainActivity.this.startActivity(intent);
+        Intent intent = new Intent(this, TabbedDrawer.class);
+        startActivity(intent);
     }
 }
