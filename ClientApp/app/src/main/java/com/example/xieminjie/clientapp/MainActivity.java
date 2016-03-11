@@ -14,16 +14,20 @@ public class MainActivity extends AppCompatActivity {
     private EditText loginTextField;
     private Button loginBtn;
     private String userID;
+    private Socket socket;
     public static final String TAG="myActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initInterface();
+        ChatApplication app = (ChatApplication)getApplication();
+        socket = app.getSocket();
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 userID = loginTextField.getText().toString();
+                socket.emit("send login request",userID);
                 startToLogin();
             }
         });
