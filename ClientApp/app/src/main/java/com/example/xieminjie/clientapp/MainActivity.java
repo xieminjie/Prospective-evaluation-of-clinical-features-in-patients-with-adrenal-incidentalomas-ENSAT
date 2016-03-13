@@ -34,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         ChatApplication app = (ChatApplication)getApplication();
         socket = app.getSocket();
-        socket.on("login reply", loginReply);
+        socket.on("login reply",loginReply);
         socket.connect();
+        Log.d(TAG, "test2");
     }
 
     private void initInterface(){
@@ -56,11 +57,13 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    JSONObject data = (JSONObject) args[0];
+                    JSONObject data = (JSONObject)args[0];
+
+                    String userid;
                     try {
-                        String result = data.getString("result");
-                        Log.d(TAG,result);
-                    } catch (JSONException e) {
+                        userid= data.getString("userNum");
+                        Log.d(TAG,"userid"+userid);
+                     } catch (JSONException e) {
                         return;
                     }
                 }
