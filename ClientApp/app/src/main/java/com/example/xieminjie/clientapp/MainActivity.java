@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 userid = loginTextField.getText().toString();
                 socket.emit("send login request",userid);
-                //startToLogin();
             }
         });
     }
