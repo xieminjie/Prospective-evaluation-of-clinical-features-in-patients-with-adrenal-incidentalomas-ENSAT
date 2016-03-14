@@ -43,7 +43,7 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initInterface();
-        ChatApplication app = (ChatApplication)this.getApplication();
+        ClientApplication app = (ClientApplication)this.getApplication();
         socket = app.getSocket();
         socket.on("register reply",storeReply);
         socket.connect();
