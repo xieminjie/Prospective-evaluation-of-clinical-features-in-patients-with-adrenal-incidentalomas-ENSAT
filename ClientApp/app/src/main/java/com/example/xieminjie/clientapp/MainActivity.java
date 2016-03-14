@@ -18,11 +18,11 @@ import io.socket.emitter.Emitter;
 
 public class MainActivity extends AppCompatActivity {
     private Socket socket;
-    private String userID;
     private EditText loginTextField;
     private Button loginBtn;
     private String userid;
     public static final String TAG="myActivity";
+    private  ClientApplication app;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +32,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        ChatApplication app = (ChatApplication)getApplication();
+        app = (ClientApplication)getApplication();
         socket = app.getSocket();
-        socket.on("login reply",loginReply);
+        socket.on("login reply", loginReply);
         socket.connect();
-        Log.d(TAG, "test2");
     }
 
     private void initInterface(){
@@ -57,13 +56,18 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    JSONObject data = (JSONObject)args[0];
-
-                    String userid;
+                    JSONObject data = (JSONObject) args[0];
                     try {
-                        userid= data.getString("userNum");
-                        Log.d(TAG,"userid"+userid);
-                     } catch (JSONException e) {
+                        String result = data.getString("userNum");
+                        Log.d(TAG,"user"+result);
+                        if (result.equals("1")) {
+                            startToLogin();
+                        } else {
+                            loginTextField.setText("");
+                            userid = "";
+                            app.getToast("Userid is wrong");
+                        }
+                    } catch (JSONException e) {
                         return;
                     }
                 }
