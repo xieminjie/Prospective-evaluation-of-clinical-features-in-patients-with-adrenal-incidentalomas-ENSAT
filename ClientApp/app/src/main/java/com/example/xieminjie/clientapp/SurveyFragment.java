@@ -61,8 +61,7 @@ public class SurveyFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_survey, container, false);
         linearLayout = (LinearLayout)view.findViewById(R.id.survey_fragment_linearLayout);
         myll = createMyll(getActivity());
