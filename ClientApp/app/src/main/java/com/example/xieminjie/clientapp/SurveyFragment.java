@@ -1,6 +1,7 @@
 package com.example.xieminjie.clientapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -72,28 +73,26 @@ public class SurveyFragment extends Fragment {
     private LinearLayout createMyll(Activity activity){
         LinearLayout ll = createll(activity);
         Button pBtn = createProblemBtn(activity);
+        pBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //  userid = loginTextField.getText().toString();
+                //  socket.emit("send login request",userid);
+                startToSurveyDetail();
+            }
+        });
         Button npBtn = createnoProblemBtn(activity);
         ll.addView(pBtn);
         ll.addView(npBtn);
         return ll;
     }
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    private void startToSurveyDetail(){
+        Intent intent = new Intent(getActivity(), SurveyDetails.class);
+        startActivity(intent);
     }
-
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
-    }
-    public void initInterace(Activity activity){
-        LinearLayout ll = createll(activity);
-        Button pBtn = createProblemBtn(activity);
-        Button npBtn = createnoProblemBtn(activity);
-        ll.addView(pBtn);
-        ll.addView(npBtn);
     }
     // check ifproblem UI
     public LinearLayout createll(Activity activity){
