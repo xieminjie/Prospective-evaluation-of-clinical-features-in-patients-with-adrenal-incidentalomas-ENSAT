@@ -44,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userid = loginTextField.getText().toString();
-                socket.emit("send login request",userid);
+              //  userid = loginTextField.getText().toString();
+              //  socket.emit("send login request",userid);
+                startToLogin();
             }
         });
     }
