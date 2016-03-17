@@ -21,6 +21,10 @@ public class Message {
     private int sadness;
     private int body_hair_growth;
     public Message(){};
+    public Message(boolean ifillness,int palpitations){
+        this.ifillness = ifillness;
+        this.palpitations = palpitations;
+    }
     public boolean isIfProblem() {
         return ifProblem;
     }

@@ -16,6 +16,7 @@ import java.util.ArrayList;
  * Created by xieminjie on 17/03/2016.
  */
 public class QuestionAdapter extends ArrayAdapter<Question> {
+    private Message message;
     public QuestionAdapter(Context context, ArrayList<Question> arrayList) {
         super(context, 0, arrayList);
     }
@@ -33,7 +34,6 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 progress = i;
-
             }
 
             @Override

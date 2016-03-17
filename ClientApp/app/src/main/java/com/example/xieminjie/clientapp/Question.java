@@ -7,21 +7,16 @@ import java.util.ArrayList;
  */
 public class Question {
     public String displayname;
+    public static String[] questionnames = {"palpitations","weight gain","high blood pressure","muscle weakness","sweating",
+            "flushing","headache","chest pain","back pain","bruising","fatigue","panic/anxiety","sadness","body hair growth"};
     public Question(String displayname){
         this.displayname = displayname;
     }
     public static ArrayList<Question> getQuestions(){
         ArrayList<Question> questions = new ArrayList<Question>();
-        questions.add(new Question("a"));
-        questions.add(new Question("b"));
-        questions.add(new Question("c"));
-        questions.add(new Question("d"));
-        questions.add(new Question("e"));
-        questions.add(new Question("f"));
-        questions.add(new Question("g"));
-        questions.add(new Question("h"));
-        questions.add(new Question("i"));
-
+        for(int i=0;i<questionnames.length;i++){
+            questions.add(new Question(questionnames[i]));
+        }
         return questions;
     }
 }
