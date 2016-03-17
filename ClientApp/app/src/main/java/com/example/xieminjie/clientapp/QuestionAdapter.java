@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,9 +26,26 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.question_cell, parent, false);
         }
         TextView questionName = (TextView) convertView.findViewById(R.id.question_name);
-        Log.d("myActivity", question.displayname);
         questionName.setText(question.displayname);
-        questionName.setTextColor(Color.BLACK);
+        SeekBar seekBar = (SeekBar)convertView.findViewById(R.id.question_seekbar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progress = 0;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                progress = i;
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
         return convertView;
     }
 }
