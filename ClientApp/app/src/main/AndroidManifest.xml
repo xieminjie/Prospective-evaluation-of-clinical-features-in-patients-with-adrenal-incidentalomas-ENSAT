@@ -27,6 +27,10 @@
             android:name=".TabbedDrawer"
             android:label="@string/title_activity_tabbed_drawer" >
         </activity>
+        <activity
+            android:name=".SurveyDetails"
+            android:label="@string/title_activity_survey_details" >
+        </activity>
     </application>
 
 </manifest>

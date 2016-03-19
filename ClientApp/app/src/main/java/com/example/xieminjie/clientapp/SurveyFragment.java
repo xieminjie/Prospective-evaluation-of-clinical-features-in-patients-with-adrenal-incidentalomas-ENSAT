@@ -1,12 +1,15 @@
 package com.example.xieminjie.clientapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 
 /**
@@ -26,17 +29,13 @@ public class SurveyFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SurveyFragment.
-     */
+    private boolean ifSurvey;
+    private boolean ifProblem;
+    private LinearLayout linearLayout;
+    private LinearLayout myll;
+
     // TODO: Rename and change types and number of parameters
     public static SurveyFragment newInstance(String param1, String param2) {
         SurveyFragment fragment = new SurveyFragment();
@@ -58,35 +57,58 @@ public class SurveyFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_survey, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_survey, container, false);
+        linearLayout = (LinearLayout)view.findViewById(R.id.survey_fragment_linearLayout);
+        myll = createMyll(getActivity());
+        linearLayout.addView(myll);
+        return view;
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    // UI for haven't do survey today
+    private LinearLayout createMyll(Activity activity){
+        LinearLayout ll = createll(activity);
+        Button pBtn = createProblemBtn(activity);
+        pBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //  userid = loginTextField.getText().toString();
+                //  socket.emit("send login request",userid);
+                startToSurveyDetail();
+            }
+        });
+        Button npBtn = createnoProblemBtn(activity);
+        ll.addView(pBtn);
+        ll.addView(npBtn);
+        return ll;
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    private void startToSurveyDetail(){
+        Intent intent = new Intent(getActivity(), SurveyDetails.class);
+        startActivity(intent);
+    }
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+    // check ifproblem UI
+    public LinearLayout createll(Activity activity){
+        LinearLayout surveyLayout = new LinearLayout(activity);
+        surveyLayout.setOrientation(LinearLayout.VERTICAL);
+        surveyLayout.setPadding(0, 0, 0, 0);
+        return surveyLayout;
+    }
+    public Button createProblemBtn (Activity activity){
+        Button problemBtn = new Button(activity);
+        problemBtn.setText("Yes");
+        return problemBtn;
+    }
+    public Button createnoProblemBtn (Activity activity){
+        Button noproblemBtn = new Button(activity);
+        noproblemBtn.setText("No");
+        return noproblemBtn;
     }
 
 }

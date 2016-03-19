@@ -2,7 +2,6 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var login = require('./login.js');
 var events = require('events');
 var eventEmitter = new events.EventEmitter();
 var mysql = require('mysql');
@@ -17,13 +16,20 @@ connection.connect();
 
 io.on('connection', function(socket){
   console.log('a user connected');
+
   socket.on('send login request', function(msg){
     eventEmitter.emit('user query from database',msg);    
   });
-  eventEmitter.on('ready to reply',function(resultReply){
-    console.log('ready to send',resultReply.userNum);
-    socket.emit('login reply',resultReply);
+
+  socket.on('send question Data',function(msg){
+    console.log('receive question data');
+    console.log(msg);
   });
+
+});
+eventEmitter.on('ready to reply',function(resultReply){
+  console.log('ready to send',resultReply.userNum);
+  socket.emit('login reply',resultReply);
 });
 
 eventEmitter.on('user query from database',function(msg){
