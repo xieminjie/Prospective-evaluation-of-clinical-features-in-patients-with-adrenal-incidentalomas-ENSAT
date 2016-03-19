@@ -19,12 +19,11 @@ import java.util.ArrayList;
  * Created by xieminjie on 17/03/2016.
  */
 public class QuestionAdapter extends ArrayAdapter<Question> {
-    private Message message;
     public QuestionAdapter(Context context, ArrayList<Question> arrayList) {
         super(context, 0, arrayList);
     }
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final Question question = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.question_cell, parent, false);
@@ -38,16 +37,15 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 progress = i;
-                question.setMark(i);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                question.setMark(progress);
 
             }
         });
