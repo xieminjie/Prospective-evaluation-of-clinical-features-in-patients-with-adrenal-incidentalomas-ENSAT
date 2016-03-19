@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -22,18 +25,20 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Question question = getItem(position);
+        final Question question = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.question_cell, parent, false);
         }
         TextView questionName = (TextView) convertView.findViewById(R.id.question_name);
-        questionName.setText(question.displayname);
+        questionName.setText(question.getName());
         SeekBar seekBar = (SeekBar)convertView.findViewById(R.id.question_seekbar);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress = 0;
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 progress = i;
+                question.setMark(i);
             }
 
             @Override
