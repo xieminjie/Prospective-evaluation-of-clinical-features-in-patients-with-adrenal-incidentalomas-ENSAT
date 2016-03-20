@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private String userid;
     public static final String TAG="myActivity";
     private  ClientApplication app;
+    private IOStorageHandler ioStorageHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         String result = data.getString("userNum");
                         if (result.equals("1")) {
-                            printLog("record.txt","hello");
-                            printLog("record.txt","world");
                             startToLogin();
                         } else {
                             loginTextField.setText("");
@@ -88,20 +87,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     };
-    private void printLog(String fs,String str){
-        String filename = fs;
-        String string = str;
-        FileOutputStream outputStream;
-
-        try {
-            outputStream = openFileOutput(filename, Context.MODE_APPEND);
-            outputStream.write(string.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
     private void startToLogin(){
         Intent intent = new Intent(this, TabbedDrawer.class);
         startActivity(intent);
