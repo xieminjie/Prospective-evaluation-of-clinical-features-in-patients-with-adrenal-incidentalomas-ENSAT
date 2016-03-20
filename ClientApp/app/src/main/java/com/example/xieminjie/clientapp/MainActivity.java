@@ -2,6 +2,7 @@ package com.example.xieminjie.clientapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,14 @@ import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -47,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  userid = loginTextField.getText().toString();
-              //  socket.emit("send login request",userid);
-                startToLogin();
+                userid = loginTextField.getText().toString();
+                socket.emit("send login request", userid);
+
+               // startToLogin();
             }
         });
     }
@@ -62,8 +72,9 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject data = (JSONObject) args[0];
                     try {
                         String result = data.getString("userNum");
-                        Log.d(TAG,"user"+result);
                         if (result.equals("1")) {
+                            printLog("record.txt","hello");
+                            printLog("record.txt","world");
                             startToLogin();
                         } else {
                             loginTextField.setText("");
@@ -77,6 +88,20 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     };
+    private void printLog(String fs,String str){
+        String filename = fs;
+        String string = str;
+        FileOutputStream outputStream;
+
+        try {
+            outputStream = openFileOutput(filename, Context.MODE_APPEND);
+            outputStream.write(string.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     private void startToLogin(){
         Intent intent = new Intent(this, TabbedDrawer.class);
         startActivity(intent);

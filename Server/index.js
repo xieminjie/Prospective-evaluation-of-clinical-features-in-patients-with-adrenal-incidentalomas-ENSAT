@@ -25,13 +25,13 @@ io.on('connection', function(socket){
     console.log('receive question data');
     console.log(msg);
   });
-
-});
-eventEmitter.on('ready to reply',function(resultReply){
+  
+  eventEmitter.on('ready to reply',function(resultReply){
   console.log('ready to send',resultReply.userNum);
   socket.emit('login reply',resultReply);
 });
 
+});
 eventEmitter.on('user query from database',function(msg){
   connection.query('SELECT COUNT(iduser) as count from user where iduser = ?',msg,function(err,result){
     if(err) {
