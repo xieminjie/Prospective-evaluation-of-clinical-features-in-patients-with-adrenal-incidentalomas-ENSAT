@@ -63,10 +63,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 userid = loginTextField.getText().toString();
                 socket.emit("send login request", userid);
-                String strDate = dateHandler.getCurrentData();
-                ioStorageHandler.printUserIDLog("userLog.csv",userid,strDate,getApplicationContext());
-                Log.d("myActivity",strDate);
-                startToLogin();
             }
         });
     }

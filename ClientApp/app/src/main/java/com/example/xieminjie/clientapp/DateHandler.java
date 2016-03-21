@@ -11,7 +11,7 @@ public class DateHandler {
     public static String getCurrentData(){
         String strDate;
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         strDate = mdformat.format(calendar.getTime());
         return strDate;
     }

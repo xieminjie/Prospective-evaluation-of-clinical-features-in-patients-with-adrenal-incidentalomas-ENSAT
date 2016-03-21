@@ -18,7 +18,7 @@ public class Question {
         this.name = name;
         this.mark = mark;
     }
-   public static String[] questionnames = {"palpitations","weight gain","high blood pressure","muscle weakness","sweating",
+   public static String[] questionnames = {"if ill","palpitations","weight gain","high blood pressure","muscle weakness","sweating",
             "flushing","headache","chest pain","back pain","bruising","fatigue","panic/anxiety","sadness","body hair growth"};
 
     public String getName() {

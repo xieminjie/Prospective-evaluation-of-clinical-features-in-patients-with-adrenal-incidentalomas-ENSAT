@@ -13,7 +13,6 @@ import java.io.FileOutputStream;
 public class IOStorageHandler {
     private static final String COMMA_DELIMITER = ",";
     private static final String NEW_LINE_SEPARATOR = "\n";
-    private static final String FILE_HEADER_DATE = "DATE";
     private static final String FILE_HEADER_USER_LOG = "USERID,DATE";
     public static void printUserIDLog(String fs,String userID,String date,Context context){
         String filename = fs;
@@ -22,7 +21,7 @@ public class IOStorageHandler {
         FileOutputStream outputStream;
         try {
             outputStream = context.openFileOutput(filename, Context.MODE_APPEND);
-            //outputStream.write(FILE_HEADER_USER_LOG.getBytes());
+           // outputStream.write(FILE_HEADER_USER_LOG.getBytes());
             outputStream.write(userid.getBytes());
             outputStream.write(COMMA_DELIMITER.getBytes());
             outputStream.write(adate.getBytes());
