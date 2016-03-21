@@ -24,6 +24,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG="myActivity";
     private  ClientApplication app;
     private IOStorageHandler ioStorageHandler;
+    private DateHandler dateHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         app = (ClientApplication)getApplication();
         socket = app.getSocket();
         socket.on("login reply", loginReply);
@@ -59,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 userid = loginTextField.getText().toString();
                 socket.emit("send login request", userid);
-
-               // startToLogin();
+                String strDate = dateHandler.getCurrentData();
+                ioStorageHandler.printUserIDLog("userLog.csv",userid,strDate,getApplicationContext());
+                Log.d("myActivity",strDate);
+                startToLogin();
             }
         });
     }
