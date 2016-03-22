@@ -22,16 +22,23 @@ io.on('connection', function(socket){
   });
 
   socket.on('send question Data',function(msg){
-    console.log('receive question data');
-    console.log(msg);
+    var message = JSON.parse(msg);
+    console.log('chest',message.chest_pain);
+    var query = connection.query('insert into record set ?',message, function (err, result) {
+       if (err) {
+         console.error(err);
+         return;
+       }
+    console.error(result);
+    });
   });
-
-});
-eventEmitter.on('ready to reply',function(resultReply){
+  
+  eventEmitter.on('ready to reply',function(resultReply){
   console.log('ready to send',resultReply.userNum);
   socket.emit('login reply',resultReply);
 });
 
+});
 eventEmitter.on('user query from database',function(msg){
   connection.query('SELECT COUNT(iduser) as count from user where iduser = ?',msg,function(err,result){
     if(err) {
@@ -45,9 +52,8 @@ eventEmitter.on('user query from database',function(msg){
       }
       eventEmitter.emit('ready to reply',resultReply);
     }
-  });
+   });
 });
-
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });

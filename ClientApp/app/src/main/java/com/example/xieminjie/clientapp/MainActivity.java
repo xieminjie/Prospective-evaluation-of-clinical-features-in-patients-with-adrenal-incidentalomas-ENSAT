@@ -2,6 +2,7 @@ package com.example.xieminjie.clientapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,16 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
@@ -26,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private String userid;
     public static final String TAG="myActivity";
     private  ClientApplication app;
+    private IOStorageHandler ioStorageHandler;
+    private DateHandler dateHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         app = (ClientApplication)getApplication();
         socket = app.getSocket();
         socket.on("login reply", loginReply);
@@ -47,9 +61,8 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  userid = loginTextField.getText().toString();
-              //  socket.emit("send login request",userid);
-                startToLogin();
+                userid = loginTextField.getText().toString();
+                socket.emit("send login request", userid);
             }
         });
     }
@@ -62,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject data = (JSONObject) args[0];
                     try {
                         String result = data.getString("userNum");
-                        Log.d(TAG,"user"+result);
                         if (result.equals("1")) {
                             startToLogin();
                         } else {
