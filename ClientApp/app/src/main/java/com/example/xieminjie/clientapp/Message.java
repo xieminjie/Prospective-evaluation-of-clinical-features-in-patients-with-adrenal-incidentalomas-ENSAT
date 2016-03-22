@@ -14,7 +14,7 @@ public class Message {
     private int sweating;
     private int flushing;
     private int headache;
-    private int chesk_pain;
+    private int chest_pain;
     private int back_pain;
     private int bruising;
     private int fatigue;
@@ -23,9 +23,8 @@ public class Message {
     private int body_hair_growth;
     private String record_date;
 
-    public Message(String user_record,String record_date,int problem, int ill,int palpitations, int weight_gain, int high_blood_pressure, int muscle_weakness, int sweating, int flushing, int headache, int chesk_pain, int back_pain, int bruising, int fatigue, int panic, int sadness, int body_hair_growth) {
-        this.user_record = user_record;
-        this.record_date = record_date;
+    public Message(int problem, int ill,int palpitations, int weight_gain, int high_blood_pressure, int muscle_weakness, int sweating, int flushing, int headache, int chest_pain, int back_pain, int bruising, int fatigue, int panic, int sadness,String user_record) {
+
         this.problem = problem;
         this.ill = ill;
         this.palpitations = palpitations;
@@ -35,12 +34,12 @@ public class Message {
         this.sweating = sweating;
         this.flushing = flushing;
         this.headache = headache;
-        this.chesk_pain = chesk_pain;
+        this.chest_pain = chest_pain;
         this.back_pain = back_pain;
         this.bruising = bruising;
         this.fatigue = fatigue;
         this.panic = panic;
         this.sadness = sadness;
-        this.body_hair_growth = body_hair_growth;
+        this.user_record = user_record;
     }
 }

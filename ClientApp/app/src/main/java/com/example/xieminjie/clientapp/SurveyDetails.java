@@ -36,7 +36,7 @@ public class SurveyDetails extends AppCompatActivity {
     private int sweating;
     private int flushing;
     private int headache;
-    private int chesk_pain;
+    private int chest_pain;
     private int back_pain;
     private int bruising;
     private int fatigue;
@@ -62,19 +62,16 @@ public class SurveyDetails extends AppCompatActivity {
                 sweating = questions.get(5).getMark();
                 flushing = questions.get(6).getMark();
                 headache = questions.get(7).getMark();
-                chesk_pain = questions.get(8).getMark();
+                chest_pain = questions.get(8).getMark();
                 back_pain = questions.get(9).getMark();
                 bruising = questions.get(10).getMark();
                 fatigue = questions.get(11).getMark();
                 panic = questions.get(12).getMark();
                 sadness = questions.get(13).getMark();
-                body_hair_growth = questions.get(14).getMark();
                 user_record = "jx";
-                record_date = dateHandler.getCurrentData();
-                message = new Message(user_record,record_date,problem,ill,palpitations,weight_gain,high_blood_pressure,muscle_weakness,sweating,flushing
-                ,flushing,headache,chesk_pain,back_pain,bruising,fatigue,palpitations,sadness);
+            //    record_date = dateHandler.getCurrentData();
+                message = new Message(problem,ill,palpitations,weight_gain,high_blood_pressure,muscle_weakness,sweating,flushing,headache,chest_pain,back_pain,bruising,fatigue,panic,sadness,user_record);
                 String json = ConvertToJson(message);
-                Log.d(TAG, json);
                 sendData(json,socket);
             }
         });

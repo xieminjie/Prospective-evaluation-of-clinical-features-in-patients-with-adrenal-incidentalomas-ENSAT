@@ -19,7 +19,7 @@ public class Question {
         this.mark = mark;
     }
    public static String[] questionnames = {"if ill","palpitations","weight gain","high blood pressure","muscle weakness","sweating",
-            "flushing","headache","chest pain","back pain","bruising","fatigue","panic/anxiety","sadness","body hair growth"};
+            "flushing","headache","chest pain","back pain","bruising","fatigue","panic/anxiety","sadness"};
 
     public String getName() {
         return name;
@@ -36,7 +36,7 @@ public class Question {
     public void setMark(int mark) {
         this.mark = mark;
     }
-   public static ArrayList<Question> getQuestions(){
+    public static ArrayList<Question> getQuestions(){
         ArrayList<Question> questions = new ArrayList<Question>();
         for(int i=0;i<questionnames.length;i++){
             questions.add(new Question(questionnames[i],0));
