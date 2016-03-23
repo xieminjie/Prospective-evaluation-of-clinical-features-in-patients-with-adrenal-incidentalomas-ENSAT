@@ -69,7 +69,7 @@ public class SurveyDetails extends AppCompatActivity {
                 panic = questions.get(12).getMark();
                 sadness = questions.get(13).getMark();
                 user_record = "jx";
-            //    record_date = dateHandler.getCurrentData();
+                record_date = dateHandler.getCurrentData();
                 message = new Message(problem,ill,palpitations,weight_gain,high_blood_pressure,muscle_weakness,sweating,flushing,headache,chest_pain,back_pain,bruising,fatigue,panic,sadness,user_record);
                 String json = ConvertToJson(message);
                 sendData(json,socket);
