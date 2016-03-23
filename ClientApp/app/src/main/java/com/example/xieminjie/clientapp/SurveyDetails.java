@@ -44,6 +44,7 @@ public class SurveyDetails extends AppCompatActivity {
     private int sadness;
     private int body_hair_growth;
     private String record_date;
+    private IOStorageHandler ioStorageHandler;
 
 
     @Override
@@ -68,8 +69,9 @@ public class SurveyDetails extends AppCompatActivity {
                 fatigue = questions.get(11).getMark();
                 panic = questions.get(12).getMark();
                 sadness = questions.get(13).getMark();
-                user_record = "jx";
+                user_record = ioStorageHandler.readUserID("user", getApplicationContext());
                 record_date = dateHandler.getCurrentData();
+                ioStorageHandler.printRecordLog("record.csv",getApplicationContext());
                 message = new Message(problem,ill,palpitations,weight_gain,high_blood_pressure,muscle_weakness,sweating,flushing,headache,chest_pain,back_pain,bruising,fatigue,panic,sadness,user_record);
                 String json = ConvertToJson(message);
                 sendData(json,socket);
@@ -120,5 +122,10 @@ public class SurveyDetails extends AppCompatActivity {
         Gson gson = new Gson();
         str = gson.toJson(message);
         return str;
+    }
+    private String getUserID(){
+        String userID="";
+
+        return userID;
     }
 }

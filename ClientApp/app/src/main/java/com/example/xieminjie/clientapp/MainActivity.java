@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         String result = data.getString("userNum");
                         if (result.equals("1")) {
+                            ioStorageHandler.printUserID("user",userid,getApplicationContext());
                             startToLogin();
                         } else {
                             loginTextField.setText("");

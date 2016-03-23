@@ -13,18 +13,44 @@ import java.io.FileOutputStream;
 public class IOStorageHandler {
     private static final String COMMA_DELIMITER = ",";
     private static final String NEW_LINE_SEPARATOR = "\n";
-    private static final String FILE_HEADER_USER_LOG = "USERID,DATE";
-    public static void printUserIDLog(String fs,String userID,String date,Context context){
+    private static final String FILE_HEADER_USER_LOG = "problem,ill,palpitations,weight_gain,high_blood_pressure," +
+            "muscle_weakness,sweating,flushing,headache,chest_pain,back_pain,bruising,fatigue,panic,sadness," +
+            "user_record,record_date";
+    private static final String FILE_HEADER_USERID = "USERID";
+    public static void printUserID(String fs,String userID,Context context){
         String filename = fs;
-        String userid = userID;
-        String adate = date;
+        FileOutputStream outputStream;
+        try{
+            outputStream = context.openFileOutput(filename,Context.MODE_PRIVATE);
+            outputStream.write(userID.getBytes());
+            outputStream.flush();
+            outputStream.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static String readUserID(String fs,Context context){
+        FileInputStream inputStream;
+        String data="";
+        try{
+            inputStream = context.openFileInput(fs);
+            int c;
+            while( (c = inputStream.read()) != -1){
+                data = data + Character.toString((char)c);
+            }
+            Log.d("myActivity", "userID " + data);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return data;
+    }
+    public static void printRecordLog(String fs,Context context){
+        String filename = fs;
         FileOutputStream outputStream;
         try {
             outputStream = context.openFileOutput(filename, Context.MODE_APPEND);
-           // outputStream.write(FILE_HEADER_USER_LOG.getBytes());
-            outputStream.write(userid.getBytes());
-            outputStream.write(COMMA_DELIMITER.getBytes());
-            outputStream.write(adate.getBytes());
+            outputStream.write(FILE_HEADER_USER_LOG.getBytes());
             outputStream.write(NEW_LINE_SEPARATOR.getBytes());
             outputStream.flush();
             outputStream.close();
@@ -32,7 +58,7 @@ public class IOStorageHandler {
             e.printStackTrace();
         }
     }
-    public static String readUserIDLog(String fs,Context context){
+    public static String readRecordLog(String fs,Context context){
         FileInputStream inputStream;
         String data="";
         try{
@@ -42,37 +68,6 @@ public class IOStorageHandler {
                 data = data + Character.toString((char)c);
             }
             Log.d("myActivity","userID "+data);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return data;
-    }
-    public static void printLog(String fs,String str,Context context){
-
-        String filename = fs;
-        String string = str;
-        FileOutputStream outputStream;
-        try {
-            outputStream = context.openFileOutput(filename, Context.MODE_APPEND);
-            outputStream.write(string.getBytes());
-            outputStream.write(NEW_LINE_SEPARATOR.getBytes());
-            outputStream.flush();
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public static String readLog(String fs,Context context){
-        FileInputStream inputStream;
-        String data="";
-        try{
-            inputStream = context.openFileInput(fs);
-            int c;
-            while( (c = inputStream.read()) != -1){
-                data = data + Character.toString((char)c);
-            }
-            Log.d("myActivity","This is "+data);
         }
         catch(Exception e){
             e.printStackTrace();
