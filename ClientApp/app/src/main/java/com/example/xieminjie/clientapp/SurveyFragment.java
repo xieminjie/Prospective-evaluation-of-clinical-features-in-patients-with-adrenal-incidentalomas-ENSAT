@@ -12,19 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SurveyFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SurveyFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SurveyFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +33,10 @@ public class SurveyFragment extends Fragment {
     private boolean ifProblem;
     private LinearLayout linearLayout;
     private LinearLayout myll;
+    boolean ifDone;
+    private ArrayList<Record> arrayList;
+    private IOStorageHandler ioStorageHandler;
+    private DateHandler dateHandler;
 
     // TODO: Rename and change types and number of parameters
     public static SurveyFragment newInstance(String param1, String param2) {
@@ -62,12 +59,23 @@ public class SurveyFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        arrayList = ioStorageHandler.readRecordLog("record.csv",getContext());
+        String lastData = arrayList.get(arrayList.size()-1).getRecord_date();
+        if (lastData.equals(dateHandler.getCurrentData().toString())){
+            ifDone = true;
+        }else{
+            ifDone = false;
+        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_survey, container, false);
         linearLayout = (LinearLayout)view.findViewById(R.id.survey_fragment_linearLayout);
-        myll = createMyll(getActivity());
+        if(ifDone){
+            myll = creaateall(getActivity());
+        }else {
+            myll = createMyll(getActivity());
+        }
         linearLayout.addView(myll);
         return view;
     }
@@ -86,6 +94,14 @@ public class SurveyFragment extends Fragment {
         ll.addView(npBtn);
         return ll;
     }
+    // UI for have done survey today
+
+    private LinearLayout creaateall(Activity activity){
+        LinearLayout ll = createll(activity);
+        TextView textView = createText(activity);
+        ll.addView(textView);
+        return ll;
+    }
     private void startToSurveyDetail(){
         Intent intent = new Intent(getActivity(), SurveyDetails.class);
         startActivity(intent);
@@ -100,6 +116,12 @@ public class SurveyFragment extends Fragment {
         surveyLayout.setOrientation(LinearLayout.VERTICAL);
         surveyLayout.setPadding(0, 0, 0, 0);
         return surveyLayout;
+    }
+    public TextView createText (Activity activity){
+        TextView textView = new Button(activity);
+        textView.setText("You have already finished the survey today");
+        textView.setClickable(false);
+        return textView;
     }
     public Button createProblemBtn (Activity activity){
         Button problemBtn = new Button(activity);
