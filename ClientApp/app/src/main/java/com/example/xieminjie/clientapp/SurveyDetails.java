@@ -1,5 +1,6 @@
 package com.example.xieminjie.clientapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -76,6 +77,7 @@ public class SurveyDetails extends AppCompatActivity {
                 String json = ConvertToJson(message);
                 ioStorageHandler.printRecordLog("record.csv",message,getApplicationContext());
                 sendData(json,socket);
+                backtoMain();
             }
         });
     }
@@ -92,6 +94,10 @@ public class SurveyDetails extends AppCompatActivity {
     }
     private void sendData(String str, Socket socket){
         socket.emit("send question Data",str);
+    }
+    private void backtoMain(){
+        Intent intent = new Intent(this, TabbedDrawer.class);
+        startActivity(intent);
     }
     @Override
     protected void onStart(){
