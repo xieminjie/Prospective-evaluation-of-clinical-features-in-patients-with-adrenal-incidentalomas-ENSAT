@@ -71,9 +71,10 @@ public class SurveyDetails extends AppCompatActivity {
                 sadness = questions.get(13).getMark();
                 user_record = ioStorageHandler.readUserID("user", getApplicationContext());
                 record_date = dateHandler.getCurrentData();
-                ioStorageHandler.printRecordLog("record.csv",getApplicationContext());
+
                 message = new Message(problem,ill,palpitations,weight_gain,high_blood_pressure,muscle_weakness,sweating,flushing,headache,chest_pain,back_pain,bruising,fatigue,panic,sadness,user_record);
                 String json = ConvertToJson(message);
+                ioStorageHandler.printRecordLog("record.csv",message,getApplicationContext());
                 sendData(json,socket);
             }
         });
