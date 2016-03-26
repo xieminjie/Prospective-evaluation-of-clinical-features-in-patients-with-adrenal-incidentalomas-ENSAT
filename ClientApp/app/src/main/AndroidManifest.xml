@@ -20,10 +20,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Register"
-            android:label="@string/title_activity_register" >
-        </activity>
-        <activity
             android:name=".TabbedDrawer"
             android:label="@string/title_activity_tabbed_drawer" >
         </activity>

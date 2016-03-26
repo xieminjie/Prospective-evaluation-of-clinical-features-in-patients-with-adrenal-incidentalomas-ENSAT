@@ -1,5 +1,6 @@
 package com.example.xieminjie.clientapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,7 @@ public class SurveyDetails extends AppCompatActivity {
     private int sadness;
     private int body_hair_growth;
     private String record_date;
+    private IOStorageHandler ioStorageHandler;
 
 
     @Override
@@ -68,11 +70,14 @@ public class SurveyDetails extends AppCompatActivity {
                 fatigue = questions.get(11).getMark();
                 panic = questions.get(12).getMark();
                 sadness = questions.get(13).getMark();
-                user_record = "jx";
+                user_record = ioStorageHandler.readUserID("user", getApplicationContext());
                 record_date = dateHandler.getCurrentData();
+
                 message = new Message(problem,ill,palpitations,weight_gain,high_blood_pressure,muscle_weakness,sweating,flushing,headache,chest_pain,back_pain,bruising,fatigue,panic,sadness,user_record);
                 String json = ConvertToJson(message);
+                ioStorageHandler.printRecordLog("record.csv",message,getApplicationContext());
                 sendData(json,socket);
+                backtoMain();
             }
         });
     }
@@ -89,6 +94,10 @@ public class SurveyDetails extends AppCompatActivity {
     }
     private void sendData(String str, Socket socket){
         socket.emit("send question Data",str);
+    }
+    private void backtoMain(){
+        Intent intent = new Intent(this, TabbedDrawer.class);
+        startActivity(intent);
     }
     @Override
     protected void onStart(){
@@ -120,5 +129,10 @@ public class SurveyDetails extends AppCompatActivity {
         Gson gson = new Gson();
         str = gson.toJson(message);
         return str;
+    }
+    private String getUserID(){
+        String userID="";
+
+        return userID;
     }
 }
