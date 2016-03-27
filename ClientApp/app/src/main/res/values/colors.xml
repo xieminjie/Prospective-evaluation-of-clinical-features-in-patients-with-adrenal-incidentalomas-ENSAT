@@ -2,4 +2,6 @@
 <resources>
     <color name="primaryColor">#ededed</color>
     <color name="primaryColorDark">#666666</color>
+    <color name="searchBg">#ffffff</color>
+
 </resources>

@@ -27,6 +27,10 @@
             android:name=".SurveyDetails"
             android:label="@string/title_activity_survey_details" >
         </activity>
+        <activity
+            android:name=".RecordDetail"
+            android:label="@string/title_activity_record_detail" >
+        </activity>
     </application>
 
 </manifest>

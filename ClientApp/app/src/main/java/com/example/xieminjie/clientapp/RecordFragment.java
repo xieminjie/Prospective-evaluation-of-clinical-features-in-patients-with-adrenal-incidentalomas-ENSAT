@@ -1,6 +1,7 @@
 package com.example.xieminjie.clientapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -75,12 +76,16 @@ public class RecordFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("myActivity", "helloworld");
+                startToShow();
             }
         });
         ll.addView(editText);
         ll.addView(button);
         return ll;
+    }
+    private void startToShow(){
+        Intent intent = new Intent(getActivity(), RecordDetail.class);
+        startActivity(intent);
     }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
