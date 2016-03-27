@@ -118,9 +118,8 @@ public class SurveyFragment extends Fragment {
         return surveyLayout;
     }
     public TextView createText (Activity activity){
-        TextView textView = new Button(activity);
+        TextView textView = new TextView(activity);
         textView.setText("You have already finished the survey today");
-        textView.setClickable(false);
         return textView;
     }
     public Button createProblemBtn (Activity activity){
