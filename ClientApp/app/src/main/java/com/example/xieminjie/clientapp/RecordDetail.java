@@ -29,7 +29,7 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
     private IOStorageHandler ioStorageHandler;
     private Hashtable hashtable;
     private Record record;
-    private int index = 0;
+    private int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,10 +100,10 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
         ArrayList<IBarDataSet> dataSets;
         ArrayList<BarEntry> valueSet = new ArrayList<>();
         for(int i =dataArrayList.size()-1;i>=0;i--){
-            BarEntry barEntry = new BarEntry(10,dataArrayList.size()-1-i);
+            BarEntry barEntry = new BarEntry(Integer.parseInt(dataArrayList.get(i).toString()),dataArrayList.size()-1-i);
             valueSet.add(barEntry);
         }
-        BarDataSet barDataSet = new BarDataSet(valueSet,"brand 1 ");
+        BarDataSet barDataSet = new BarDataSet(valueSet,"value");
         barDataSet.setColor(Color.rgb(0,155,0));
         dataSets = new ArrayList<>();
         dataSets.add(barDataSet);
