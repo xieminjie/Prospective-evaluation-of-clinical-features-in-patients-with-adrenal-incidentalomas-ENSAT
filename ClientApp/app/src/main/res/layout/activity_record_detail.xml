@@ -12,6 +12,9 @@
         android:id="@+id/record_SearchView"
         android:background="@color/searchBg"
         android:layout_below="@+id/navbar" />
-
-
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/record_SearchView"/>
 </RelativeLayout>
