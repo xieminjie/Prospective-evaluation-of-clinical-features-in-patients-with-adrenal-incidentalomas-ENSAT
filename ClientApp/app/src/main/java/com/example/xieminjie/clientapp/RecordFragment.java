@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class RecordFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -28,16 +30,7 @@ public class RecordFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private LinearLayout linearLayout;
     private LinearLayout myll;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecordFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+    private IOStorageHandler ioStorageHandler;
     public static RecordFragment newInstance(String param1, String param2) {
         RecordFragment fragment = new RecordFragment();
         Bundle args = new Bundle();
@@ -59,7 +52,6 @@ public class RecordFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,20 +63,21 @@ public class RecordFragment extends Fragment {
     }
     private LinearLayout createMyll(Activity activity){
         LinearLayout ll = createll(activity);
-        EditText editText = createText(activity);
+        final EditText editText = createText(activity);
         Button button = createButton(activity);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startToShow();
+                startToShow(editText.getText().toString());
             }
         });
         ll.addView(editText);
         ll.addView(button);
         return ll;
     }
-    private void startToShow(){
+    private void startToShow(String msg){
         Intent intent = new Intent(getActivity(), RecordDetail.class);
+        intent.putExtra("searchName",msg);
         startActivity(intent);
     }
     // TODO: Rename method, update argument and hook method into UI event

@@ -137,7 +137,29 @@ public class IOStorageHandler {
         }
         return arrayList;
     }
+    public static ArrayList<String> readData(String fs,int item,Context context){
+        ArrayList<String> arrayList = new ArrayList();
+        try{
+            FileInputStream inputStream = context.openFileInput(fs);
+            InputStreamReader isr = new InputStreamReader(inputStream,"UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            String line;
+            while((line=bufferedReader.readLine())!=null){
+                String[] tokens = line.split(COMMA_DELIMITER);
+                if(tokens.length>0){
+                    arrayList.add((tokens[item].toString()));
+                }
+            }
 
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return arrayList;
+    }
 
 
 }

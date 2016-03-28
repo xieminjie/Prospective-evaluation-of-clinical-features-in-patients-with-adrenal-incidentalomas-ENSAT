@@ -1,5 +1,7 @@
 package com.example.xieminjie.clientapp;
 
+import java.util.Hashtable;
+
 /**
  * Created by xieminjie on 25/03/2016.
  */
@@ -39,7 +41,26 @@ public class Record {
         this.sadness = sadness;
         this.record_date = record_date;
     }
-
+    public Hashtable getRecordHashTable(){
+        Hashtable<String,String> hashtable = new Hashtable();
+        hashtable.put("problem","0");
+        hashtable.put("ill","1");
+        hashtable.put("palpitations","2");
+        hashtable.put("weight_gain","3");
+        hashtable.put("high_blood_pressure","4");
+        hashtable.put("muscle_weakness","5");
+        hashtable.put("sweating","6");
+        hashtable.put("flushing","7");
+        hashtable.put("headache","8");
+        hashtable.put("chest_pain","9");
+        hashtable.put("back_pain","10");
+        hashtable.put("bruising","11");
+        hashtable.put("fatigue","12");
+        hashtable.put("panic","13");
+        hashtable.put("sadness","14");
+        hashtable.put("record_date","15");
+        return hashtable;
+    }
     public int getProblem() {
         return problem;
     }
