@@ -1,12 +1,13 @@
 package com.example.xieminjie.clientapp;
 
+import java.util.Hashtable;
+
 /**
- * Created by xieminjie on 8/03/2016.
+ * Created by xieminjie on 25/03/2016.
  */
-public class Message {
+public class Record {
     private int problem;
     private int ill;
-    private String user_record;
     private int palpitations;
     private int weight_gain;
     private int high_blood_pressure;
@@ -20,11 +21,9 @@ public class Message {
     private int fatigue;
     private int panic;
     private int sadness;
-    private int body_hair_growth;
     private String record_date;
 
-    public Message(int problem, int ill,int palpitations, int weight_gain, int high_blood_pressure, int muscle_weakness, int sweating, int flushing, int headache, int chest_pain, int back_pain, int bruising, int fatigue, int panic, int sadness,String user_record) {
-
+    public Record(int problem, int ill, int palpitations, int weight_gain, int high_blood_pressure, int muscle_weakness, int sweating, int flushing, int headache, int chest_pain, int back_pain, int bruising, int fatigue, int panic, int sadness, String record_date) {
         this.problem = problem;
         this.ill = ill;
         this.palpitations = palpitations;
@@ -40,9 +39,28 @@ public class Message {
         this.fatigue = fatigue;
         this.panic = panic;
         this.sadness = sadness;
-        this.user_record = user_record;
+        this.record_date = record_date;
     }
-
+    public Hashtable getRecordHashTable(){
+        Hashtable<String,String> hashtable = new Hashtable();
+        hashtable.put("problem","0");
+        hashtable.put("ill","1");
+        hashtable.put("palpitations","2");
+        hashtable.put("weight_gain","3");
+        hashtable.put("high_blood_pressure","4");
+        hashtable.put("muscle_weakness","5");
+        hashtable.put("sweating","6");
+        hashtable.put("flushing","7");
+        hashtable.put("headache","8");
+        hashtable.put("chest_pain","9");
+        hashtable.put("back_pain","10");
+        hashtable.put("bruising","11");
+        hashtable.put("fatigue","12");
+        hashtable.put("panic","13");
+        hashtable.put("sadness","14");
+        hashtable.put("record_date","15");
+        return hashtable;
+    }
     public int getProblem() {
         return problem;
     }
@@ -57,14 +75,6 @@ public class Message {
 
     public void setIll(int ill) {
         this.ill = ill;
-    }
-
-    public String getUser_record() {
-        return user_record;
-    }
-
-    public void setUser_record(String user_record) {
-        this.user_record = user_record;
     }
 
     public int getPalpitations() {
@@ -169,5 +179,13 @@ public class Message {
 
     public void setSadness(int sadness) {
         this.sadness = sadness;
+    }
+
+    public String getRecord_date() {
+        return record_date;
+    }
+
+    public void setRecord_date(String record_date) {
+        this.record_date = record_date;
     }
 }

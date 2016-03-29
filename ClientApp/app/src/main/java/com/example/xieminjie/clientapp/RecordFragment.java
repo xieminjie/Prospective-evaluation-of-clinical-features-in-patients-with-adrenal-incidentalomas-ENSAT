@@ -1,22 +1,22 @@
 package com.example.xieminjie.clientapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RecordFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link RecordFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RecordFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,16 +28,9 @@ public class RecordFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecordFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+    private LinearLayout linearLayout;
+    private LinearLayout myll;
+    private IOStorageHandler ioStorageHandler;
     public static RecordFragment newInstance(String param1, String param2) {
         RecordFragment fragment = new RecordFragment();
         Bundle args = new Bundle();
@@ -59,14 +52,34 @@ public class RecordFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_record, container, false);
+        final View view = inflater.inflate(R.layout.fragment_record, container, false);
+        linearLayout = (LinearLayout)view.findViewById(R.id.report_fragment_linearLayout);
+        myll = createMyll(getActivity());
+        linearLayout.addView(myll);
+        return view;
     }
-
+    private LinearLayout createMyll(Activity activity){
+        LinearLayout ll = createll(activity);
+        final EditText editText = createText(activity);
+        Button button = createButton(activity);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startToShow(editText.getText().toString());
+            }
+        });
+        ll.addView(editText);
+        ll.addView(button);
+        return ll;
+    }
+    private void startToShow(String msg){
+        Intent intent = new Intent(getActivity(), RecordDetail.class);
+        intent.putExtra("searchName",msg);
+        startActivity(intent);
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -74,16 +87,21 @@ public class RecordFragment extends Fragment {
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    public LinearLayout createll(Activity activity){
+        LinearLayout surveyLayout = new LinearLayout(activity);
+        surveyLayout.setOrientation(LinearLayout.VERTICAL);
+        surveyLayout.setPadding(0, 0, 0, 0);
+        return surveyLayout;
+    }
+    public EditText createText (Activity activity){
+        EditText textView = new EditText(activity);
+        return textView;
+    }
+    public Button createButton (Activity activity){
+        Button problemBtn = new Button(activity);
+        problemBtn.setText("Confirm");
+        return problemBtn;
+    }
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);

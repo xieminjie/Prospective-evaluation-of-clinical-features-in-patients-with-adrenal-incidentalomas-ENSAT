@@ -20,16 +20,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Register"
-            android:label="@string/title_activity_register" >
-        </activity>
-        <activity
             android:name=".TabbedDrawer"
             android:label="@string/title_activity_tabbed_drawer" >
         </activity>
         <activity
             android:name=".SurveyDetails"
             android:label="@string/title_activity_survey_details" >
+        </activity>
+        <activity
+            android:name=".RecordDetail"
+            android:label="@string/title_activity_record_detail" >
         </activity>
     </application>
 

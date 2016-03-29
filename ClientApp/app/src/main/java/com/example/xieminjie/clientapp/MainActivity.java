@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initInterface();
+        ioStorageHandler.readRecordLog("record.csv",getApplicationContext());
     }
     @Override
     protected void onStart() {
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         String result = data.getString("userNum");
                         if (result.equals("1")) {
+                            ioStorageHandler.printUserID("user",userid,getApplicationContext());
                             startToLogin();
                         } else {
                             loginTextField.setText("");
