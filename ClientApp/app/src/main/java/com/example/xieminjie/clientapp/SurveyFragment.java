@@ -14,9 +14,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+
+import io.socket.client.Socket;
 
 public class SurveyFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -37,7 +41,8 @@ public class SurveyFragment extends Fragment {
     private ArrayList<Record> arrayList;
     private IOStorageHandler ioStorageHandler;
     private DateHandler dateHandler;
-
+    private Message message;
+    private Socket socket;
     // TODO: Rename and change types and number of parameters
     public static SurveyFragment newInstance(String param1, String param2) {
         SurveyFragment fragment = new SurveyFragment();
@@ -54,7 +59,12 @@ public class SurveyFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        ClientApplication app = (ClientApplication)getActivity().getApplication();
+        socket = app.getSocket();
+        socket.connect();
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -90,9 +100,38 @@ public class SurveyFragment extends Fragment {
             }
         });
         Button npBtn = createnoProblemBtn(activity);
+        npBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startToSendDate();
+            }
+        });
         ll.addView(pBtn);
         ll.addView(npBtn);
         return ll;
+    }
+
+    private void startToSendDate(){
+        String user_record = ioStorageHandler.readUserID("user", getContext());
+        message = new Message(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,user_record);
+        String json = ConvertToJson(message);
+        ioStorageHandler.printRecordLog("record.csv", message, getContext());
+        sendData(json, socket);
+        backtoMain();
+    }
+    private void backtoMain(){
+        Intent intent = new Intent(getActivity(), TabbedDrawer.class);
+        startActivity(intent);
+    }
+    private String ConvertToJson (Message message){
+        String str = null;
+        Gson gson = new Gson();
+        str = gson.toJson(message);
+        return str;
+    }
+
+    private void sendData(String str, Socket socket){
+        socket.emit("send question Data", str);
     }
     // UI for have done survey today
 
