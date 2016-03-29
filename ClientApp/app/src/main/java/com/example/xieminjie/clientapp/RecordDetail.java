@@ -30,6 +30,7 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
     private Hashtable hashtable;
     private Record record;
     private int index;
+    private BarChart barChart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,47 +41,50 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
         toolbar.setTitleTextColor(Color.WHITE);
         searchView = (SearchView)findViewById(R.id.record_SearchView);
         searchView.setOnQueryTextListener(this);
-
+        barChart = (BarChart)findViewById(R.id.chart);
         Intent intent = getIntent();
         query = intent.getStringExtra("searchName");
+        index = getIndex(query);
+        createChart(index,barChart,query);
+
+    }
+    private int getIndex(String query){
         arrayList = getDate(ioStorageHandler.readRecordLog("record.csv", getApplicationContext()));
 
         Hashtable<String,String> hashtable = new Hashtable();
         hashtable.put("problem","0");
         hashtable.put("ill","1");
         hashtable.put("palpitations","2");
-        hashtable.put("weight_gain","3");
-        hashtable.put("high_blood_pressure","4");
-        hashtable.put("muscle_weakness","5");
+        hashtable.put("weightGain","3");
+        hashtable.put("highBloodPressure","4");
+        hashtable.put("muscleWeakness","5");
         hashtable.put("sweating","6");
         hashtable.put("flushing","7");
         hashtable.put("headache","8");
-        hashtable.put("chest_pain","9");
-        hashtable.put("back_pain","10");
+        hashtable.put("chestPain","9");
+        hashtable.put("backPain","10");
         hashtable.put("bruising","11");
         hashtable.put("fatigue","12");
         hashtable.put("panic","13");
         hashtable.put("sadness","14");
-        hashtable.put("record_date","15");
+        hashtable.put("recordDate","15");
         if (hashtable.containsKey(query)){
             index = Integer.parseInt(hashtable.get(query).toString());
         }else{
-
+            index = 0;
         }
-        //date
+        return index;
+    }
+    private void createChart(int index,BarChart barChart,String query){
         dateArrayList = ioStorageHandler.readData("record.csv", 15, getApplicationContext());
         dataArrayList = ioStorageHandler.readData("record.csv",index,getApplicationContext());
-        BarChart barChart = (BarChart)findViewById(R.id.chart);
-        BarData data = new BarData(getXAxisValues(dateArrayList),getDataSet(dataArrayList));
+        BarData data = new BarData(getXAxisValues(dateArrayList),getDataSet(dataArrayList,query));
         barChart.setData(data);
         barChart.setDescription("My Chart");
         barChart.animateXY(2000, 2000);
         barChart.invalidate();
 
-
-
     }
-
     private ArrayList getDate(ArrayList<Record> recordArrayList){
         ArrayList dateArrayList = new ArrayList();
         int day = recordArrayList.size();
@@ -96,14 +100,14 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
         return dateArrayList;
     }
 
-    private ArrayList<IBarDataSet> getDataSet(ArrayList dataArrayList) {
+    private ArrayList<IBarDataSet> getDataSet(ArrayList dataArrayList,String query) {
         ArrayList<IBarDataSet> dataSets;
         ArrayList<BarEntry> valueSet = new ArrayList<>();
         for(int i =dataArrayList.size()-1;i>=0;i--){
             BarEntry barEntry = new BarEntry(Integer.parseInt(dataArrayList.get(i).toString()),dataArrayList.size()-1-i);
             valueSet.add(barEntry);
         }
-        BarDataSet barDataSet = new BarDataSet(valueSet,"value");
+        BarDataSet barDataSet = new BarDataSet(valueSet,query);
         barDataSet.setColor(Color.rgb(0,155,0));
         dataSets = new ArrayList<>();
         dataSets.add(barDataSet);
@@ -113,8 +117,14 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
 
     private ArrayList<String> getXAxisValues(ArrayList dateArrayList) {
         ArrayList<String> xAxis = new ArrayList<>();
-        for(int i=dateArrayList.size()-1;i>=0;i--){
-            xAxis.add(dateArrayList.get(i).toString());
+        if (dateArrayList.size()<=5){
+            for(int i=0;i<dateArrayList.size();i++){
+                xAxis.add(dateArrayList.get(i).toString());
+            }
+        }else{
+            for(int i=dateArrayList.size()-6;i<dateArrayList.size();i++){
+                xAxis.add(dateArrayList.get(i).toString());
+            }
         }
         return xAxis;
     }
@@ -141,6 +151,9 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String s) {
+        barChart.clear();
+        index = getIndex(s);
+        createChart(index, barChart,s);
         return false;
     }
 
