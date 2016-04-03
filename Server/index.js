@@ -13,6 +13,9 @@ app.get('/',function(req,res){
   res.sendFile(__dirname+'/views/html/index.html');
 });
 
+
+
+
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
