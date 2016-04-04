@@ -9,13 +9,6 @@ var mysql = require('mysql');
 
 app.use(express.static('views'));
 
-app.get('/',function(req,res){
-  res.sendFile(__dirname+'/views/html/index.html');
-});
-
-
-
-
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -23,6 +16,14 @@ var connection = mysql.createConnection({
   database: 'research'
 });
 connection.connect();
+
+app.get('/',function(req,res){
+  res.sendFile(__dirname+'/views/html/index.html');
+});
+
+
+
+
 
 io.on('connection', function(socket){
   console.log('a user connected');

@@ -3,8 +3,8 @@ $(document).ready(function(){
 	var socket = io();
 	renderChart();
 });
-
-function renderChart(){
+var categoriesArray =  ['Apples', 'Bananas', 'Oranges'];
+function renderChart(categoriesArray){
 	$('#container').highcharts({
         chart: {
             type: 'bar'
@@ -13,7 +13,7 @@ function renderChart(){
             text: 'Fruit Consumption'
         },
         xAxis: {
-            categories: ['Apples', 'Bananas', 'Oranges']
+            categories: categoriesArray
         },
         yAxis: {
             title: {
