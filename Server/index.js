@@ -22,9 +22,6 @@ app.get('/',function(req,res){
 });
 
 
-
-
-
 io.on('connection', function(socket){
   console.log('a user connected');
 
@@ -44,10 +41,14 @@ io.on('connection', function(socket){
     });
   });
   
+  socket.on('doc search',function(msg){
+    console.log("doc: "+msg);
+    io.emit('receive doc search',msg);
+  });
   eventEmitter.on('ready to reply',function(resultReply){
-  console.log('ready to send',resultReply.userNum);
-  socket.emit('login reply',resultReply);
-});
+    console.log('ready to send',resultReply.userNum);
+    socket.emit('login reply',resultReply);
+  });
 
 });
 eventEmitter.on('user query from database',function(msg){

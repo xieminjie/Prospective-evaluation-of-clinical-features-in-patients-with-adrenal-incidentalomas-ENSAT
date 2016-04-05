@@ -1,10 +1,24 @@
 
 $(document).ready(function(){
 	var socket = io();
-	renderChart();
+	//renderBarChart();
+	sentDataRequest(socket);
+	receiveData(socket);
 });
+var sentDataRequest = function(socket){
+	var requestBtn = $('#sendRequest');
+	requestBtn.click(function(){
+		var request = $('#requestVal').val();
+		socket.emit('doc search',request);
+	});
+}
+var receiveData = function(socket){
+	socket.on('receive doc search',function(msg){
+		$('#msg').text(msg);
+	});
+}
 var categoriesArray =  ['Apples', 'Bananas', 'Oranges'];
-function renderChart(categoriesArray){
+function renderBarChart(categoriesArray){
 	$('#container').highcharts({
         chart: {
             type: 'bar'
