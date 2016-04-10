@@ -18,14 +18,6 @@ import android.widget.TextView;
 
 public class TabbedDrawer extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
@@ -90,15 +82,16 @@ public class TabbedDrawer extends AppCompatActivity {
             }
             else if(position == 1) {
                 return new RecordFragment();
+            }else if(position ==2){
+                return new AverageData();
             }
-
             return new SurveyFragment();
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
@@ -109,6 +102,8 @@ public class TabbedDrawer extends AppCompatActivity {
                     return getString(R.string.Survey).toUpperCase(l);
                 case 1:
                     return getString(R.string.Record).toUpperCase(l);
+                case 2:
+                    return getString(R.string.Data).toUpperCase(l);
             }
             return null;
         }

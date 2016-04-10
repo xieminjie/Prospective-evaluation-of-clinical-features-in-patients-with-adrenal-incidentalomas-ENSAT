@@ -7,7 +7,7 @@ var events = require('events');
 var eventEmitter = new events.EventEmitter();
 var mysql = require('mysql');
 //Customize modules
-var dataProcessing = require("./dataProcessing.js");
+var dataProcessing = require("./Model/dataProcessing.js");
 
 
 app.use(express.static('views'));
