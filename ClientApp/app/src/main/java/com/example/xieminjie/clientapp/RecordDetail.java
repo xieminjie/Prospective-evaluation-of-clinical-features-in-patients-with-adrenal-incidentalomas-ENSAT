@@ -30,6 +30,7 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
     private Record record;
     private int index;
     private BarChart barChart;
+    private ChartHandler chartHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,18 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
         Intent intent = getIntent();
         query = intent.getStringExtra("searchName");
         index = getIndex(query);
-        createChart(index, barChart, query);
+        chartHandler = new ChartHandler();
+
+        ArrayList<String> dateArrayList;
+        ArrayList<String> dataArrayList;
+        ArrayList<String> dateArray;
+        ArrayList<String> dataArray;
+
+        dateArrayList = ioStorageHandler.readData("record.csv", 15, getApplicationContext());
+        dataArrayList = ioStorageHandler.readData("record.csv", index, getApplicationContext());
+        dateArray = dateProcessing(dateArrayList);
+        dataArray = dateProcessing(dataArrayList);
+        chartHandler.createChart(index, barChart, query,dateArray,dataArray);
 
     }
     private int getIndex(String query){
@@ -72,23 +84,6 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
         }
         return index;
     }
-    private void createChart(int index,BarChart barChart,String query){
-        ArrayList<String> dateArrayList;
-        ArrayList<String> dataArrayList;
-        ArrayList<String> dateArray;
-        ArrayList<String> dataArray;
-
-        dateArrayList = ioStorageHandler.readData("record.csv", 15, getApplicationContext());
-        dataArrayList = ioStorageHandler.readData("record.csv", index, getApplicationContext());
-        dateArray = dateProcessing(dateArrayList);
-        dataArray = dateProcessing(dataArrayList);
-        BarData data = new BarData(getXAxisValues(dateArray),getDataSet(dataArray,query));
-        barChart.setData(data);
-        barChart.setDescription("My Chart");
-        barChart.animateXY(2000, 2000);
-        barChart.invalidate();
-
-    }
     private ArrayList<String> dateProcessing(ArrayList a){
         ArrayList<String> array = new ArrayList<>();
         if(a.size()<=5){
@@ -101,27 +96,6 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
             }
         }
         return array;
-    }
-    private ArrayList<IBarDataSet> getDataSet(ArrayList dataArray,String query) {
-        ArrayList<IBarDataSet> dataSets;
-        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
-        for (int i=0;i<dataArray.size();i++){
-            BarEntry v = new BarEntry(Integer.valueOf(dataArray.get(i).toString()),i);
-            valueSet1.add(v);
-        }
-        BarDataSet barDataSet = new BarDataSet(valueSet1,query);
-        barDataSet.setColor(Color.rgb(0, 155, 0));
-        dataSets = new ArrayList<>();
-        dataSets.add(barDataSet);
-        return dataSets;
-    }
-
-    private ArrayList<String> getXAxisValues(ArrayList dateArray) {
-        ArrayList<String> xAxis = new ArrayList<>();
-        for(int i=0;i<dateArray.size();i++){
-            xAxis.add(dateArray.get(i).toString());
-        }
-        return xAxis;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,7 +122,16 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
     public boolean onQueryTextSubmit(String s) {
         barChart.clear();
         index = getIndex(s);
-        createChart(index, barChart,s);
+        ArrayList<String> dateArrayList;
+        ArrayList<String> dataArrayList;
+        ArrayList<String> dateArray;
+        ArrayList<String> dataArray;
+
+        dateArrayList = ioStorageHandler.readData("record.csv", 15, getApplicationContext());
+        dataArrayList = ioStorageHandler.readData("record.csv", index, getApplicationContext());
+        dateArray = dateProcessing(dateArrayList);
+        dataArray = dateProcessing(dataArrayList);
+        chartHandler.createChart(index, barChart, query,dateArray,dataArray);
         return false;
     }
 
