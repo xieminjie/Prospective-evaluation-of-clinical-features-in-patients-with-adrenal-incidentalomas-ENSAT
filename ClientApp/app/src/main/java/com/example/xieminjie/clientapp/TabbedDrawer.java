@@ -90,6 +90,8 @@ public class TabbedDrawer extends AppCompatActivity {
             }
             else if(position == 1) {
                 return new RecordFragment();
+            }else if (position ==2){
+                return new DataComparison();
             }
 
             return new SurveyFragment();
@@ -98,7 +100,7 @@ public class TabbedDrawer extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
@@ -109,6 +111,8 @@ public class TabbedDrawer extends AppCompatActivity {
                     return getString(R.string.Survey).toUpperCase(l);
                 case 1:
                     return getString(R.string.Record).toUpperCase(l);
+                case 2:
+                    return getString(R.string.Comparison).toUpperCase(l);
             }
             return null;
         }

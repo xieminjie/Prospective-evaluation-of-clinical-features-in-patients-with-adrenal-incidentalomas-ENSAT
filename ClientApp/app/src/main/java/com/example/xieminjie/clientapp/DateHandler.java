@@ -6,7 +6,7 @@ import java.util.Calendar;
 /**
  * Created by xieminjie on 20/03/2016.
  */
-public class DateHandler {
+public abstract class DateHandler {
 
     public static String getCurrentData(){
         String strDate;

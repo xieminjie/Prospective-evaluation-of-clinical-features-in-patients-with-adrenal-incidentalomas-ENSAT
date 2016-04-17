@@ -16,6 +16,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -24,13 +25,15 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
     private SearchView searchView;
     private String query;
     private ArrayList<Record> arrayList;
-    private ArrayList<String> dateArrayList;
-    private ArrayList<String> dataArrayList;
-    private IOStorageHandler ioStorageHandler;
     private Hashtable hashtable;
     private Record record;
     private int index;
     private BarChart barChart;
+    private ChartHandler chartHandler;
+    private ArrayList<String> dateArrayList;
+    private ArrayList<String> dataArrayList;
+    private ArrayList<String> dateArray;
+    private ArrayList<String> dataArray;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,89 +47,15 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
         barChart = (BarChart)findViewById(R.id.chart);
         Intent intent = getIntent();
         query = intent.getStringExtra("searchName");
-        index = getIndex(query);
-        createChart(index,barChart,query);
+        index = DataProcessingHandler.getIndex(query);
+        chartHandler = new ChartHandler();
 
-    }
-    private int getIndex(String query){
-        arrayList = getDate(ioStorageHandler.readRecordLog("record.csv", getApplicationContext()));
+        dateArrayList = IOStorageHandler.readData("record.csv", 15, getApplicationContext());
+        dataArrayList = IOStorageHandler.readData("record.csv", index, getApplicationContext());
+        dateArray = DataProcessingHandler.dateProcessing(dateArrayList);
+        dataArray = DataProcessingHandler.dateProcessing(dataArrayList);
+        chartHandler.createChart(index, barChart, query,dateArray,dataArray);
 
-        Hashtable<String,String> hashtable = new Hashtable();
-        hashtable.put("problem","0");
-        hashtable.put("ill","1");
-        hashtable.put("palpitations","2");
-        hashtable.put("weightGain","3");
-        hashtable.put("highBloodPressure","4");
-        hashtable.put("muscleWeakness","5");
-        hashtable.put("sweating","6");
-        hashtable.put("flushing","7");
-        hashtable.put("headache","8");
-        hashtable.put("chestPain","9");
-        hashtable.put("backPain","10");
-        hashtable.put("bruising","11");
-        hashtable.put("fatigue","12");
-        hashtable.put("panic","13");
-        hashtable.put("sadness","14");
-        hashtable.put("recordDate","15");
-        if (hashtable.containsKey(query)){
-            index = Integer.parseInt(hashtable.get(query).toString());
-        }else{
-            index = 0;
-        }
-        return index;
-    }
-    private void createChart(int index,BarChart barChart,String query){
-        dateArrayList = ioStorageHandler.readData("record.csv", 15, getApplicationContext());
-        dataArrayList = ioStorageHandler.readData("record.csv",index,getApplicationContext());
-        BarData data = new BarData(getXAxisValues(dateArrayList),getDataSet(dataArrayList,query));
-        barChart.setData(data);
-        barChart.setDescription("My Chart");
-        barChart.animateXY(2000, 2000);
-        barChart.invalidate();
-
-    }
-    private ArrayList getDate(ArrayList<Record> recordArrayList){
-        ArrayList dateArrayList = new ArrayList();
-        int day = recordArrayList.size();
-        if(day<=5){
-            for(int i=recordArrayList.size()-1;i>=0;i--){
-                dateArrayList.add(recordArrayList.get(i).getRecord_date().toString());
-            }
-        }else{
-            for(int i=recordArrayList.size()-1;i>=recordArrayList.size()-5;i--){
-                dateArrayList.add(recordArrayList.get(i).getRecord_date().toString());
-            }
-        }
-        return dateArrayList;
-    }
-
-    private ArrayList<IBarDataSet> getDataSet(ArrayList dataArrayList,String query) {
-        ArrayList<IBarDataSet> dataSets;
-        ArrayList<BarEntry> valueSet = new ArrayList<>();
-        for(int i =dataArrayList.size()-1;i>=0;i--){
-            BarEntry barEntry = new BarEntry(Integer.parseInt(dataArrayList.get(i).toString()),dataArrayList.size()-1-i);
-            valueSet.add(barEntry);
-        }
-        BarDataSet barDataSet = new BarDataSet(valueSet,query);
-        barDataSet.setColor(Color.rgb(0,155,0));
-        dataSets = new ArrayList<>();
-        dataSets.add(barDataSet);
-        return dataSets;
-    }
-
-
-    private ArrayList<String> getXAxisValues(ArrayList dateArrayList) {
-        ArrayList<String> xAxis = new ArrayList<>();
-        if (dateArrayList.size()<=5){
-            for(int i=0;i<dateArrayList.size();i++){
-                xAxis.add(dateArrayList.get(i).toString());
-            }
-        }else{
-            for(int i=dateArrayList.size()-6;i<dateArrayList.size();i++){
-                xAxis.add(dateArrayList.get(i).toString());
-            }
-        }
-        return xAxis;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -152,8 +81,12 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onQueryTextSubmit(String s) {
         barChart.clear();
-        index = getIndex(s);
-        createChart(index, barChart,s);
+        index = DataProcessingHandler.getIndex(s);
+        dateArrayList = IOStorageHandler.readData("record.csv", 15, getApplicationContext());
+        dataArrayList = IOStorageHandler.readData("record.csv", index, getApplicationContext());
+        dateArray = DataProcessingHandler.dateProcessing(dateArrayList);
+        dataArray = DataProcessingHandler.dateProcessing(dataArrayList);
+        chartHandler.createChart(index, barChart, query,dateArray,dataArray);
         return false;
     }
 
