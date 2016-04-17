@@ -39,6 +39,7 @@
             android:name=".SingleComparison"
             android:label="@string/title_activity_single_comparison" >
         </activity>
+
     </application>
 
 </manifest>

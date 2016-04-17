@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initInterface();
-        IOStorageHandler.readRecordLog("record.csv",getApplicationContext());
     }
     @Override
     protected void onStart() {
