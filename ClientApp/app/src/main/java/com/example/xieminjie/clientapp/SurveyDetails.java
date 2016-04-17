@@ -25,7 +25,6 @@ public class SurveyDetails extends AppCompatActivity {
     private Socket socket;
     ArrayList<Question> questions;
     private Message message;
-    private DateHandler dateHandler;
     //Message variables
     private int problem;
     private int ill;

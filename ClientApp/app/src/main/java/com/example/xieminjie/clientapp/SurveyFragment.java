@@ -39,8 +39,6 @@ public class SurveyFragment extends Fragment {
     private LinearLayout myll;
     boolean ifDone;
     private ArrayList<Record> arrayList;
-    private IOStorageHandler ioStorageHandler;
-    private DateHandler dateHandler;
     private Message message;
     private Socket socket;
     // TODO: Rename and change types and number of parameters
@@ -69,9 +67,9 @@ public class SurveyFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        arrayList = ioStorageHandler.readRecordLog("record.csv",getContext());
+        arrayList = IOStorageHandler.readRecordLog("record.csv",getContext());
         String lastData = arrayList.get(arrayList.size()-1).getRecord_date();
-        if (lastData.equals(dateHandler.getCurrentData().toString())){
+        if (lastData.equals(DateHandler.getCurrentData().toString())){
             ifDone = true;
         }else{
             ifDone = false;
@@ -112,10 +110,10 @@ public class SurveyFragment extends Fragment {
     }
 
     private void startToSendDate(){
-        String user_record = ioStorageHandler.readUserID("user", getContext());
+        String user_record = IOStorageHandler.readUserID("user", getContext());
         message = new Message(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,user_record);
         String json = ConvertToJson(message);
-        ioStorageHandler.printRecordLog("record.csv", message, getContext());
+        IOStorageHandler.printRecordLog("record.csv", message, getContext());
         sendData(json, socket);
         backtoMain();
     }

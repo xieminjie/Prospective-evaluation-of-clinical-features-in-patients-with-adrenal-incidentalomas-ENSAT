@@ -16,14 +16,13 @@ import java.util.ArrayList;
 /**
  * Created by xieminjie on 20/03/2016.
  */
-public class IOStorageHandler {
+public abstract class IOStorageHandler {
     private static final String COMMA_DELIMITER = ",";
     private static final String NEW_LINE_SEPARATOR = "\n";
     private static final String FILE_HEADER_USER_LOG = "problem,ill,palpitations,weight_gain,high_blood_pressure," +
             "muscle_weakness,sweating,flushing,headache,chest_pain,back_pain,bruising,fatigue,panic,sadness," +
             "record_date";
     private static final String FILE_HEADER_USERID = "USERID";
-    public static DateHandler dateHandler;
     public static void printUserID(String fs,String userID,Context context){
         String filename = fs;
         FileOutputStream outputStream;
@@ -89,7 +88,7 @@ public class IOStorageHandler {
             outputStream.write(COMMA_DELIMITER.getBytes());
             outputStream.write(String.valueOf(message.getSadness()).getBytes());
             outputStream.write(COMMA_DELIMITER.getBytes());
-            outputStream.write(dateHandler.getCurrentData().toString().getBytes());
+            outputStream.write(DateHandler.getCurrentData().toString().getBytes());
             outputStream.write(NEW_LINE_SEPARATOR.getBytes());
             outputStream.flush();
             outputStream.close();

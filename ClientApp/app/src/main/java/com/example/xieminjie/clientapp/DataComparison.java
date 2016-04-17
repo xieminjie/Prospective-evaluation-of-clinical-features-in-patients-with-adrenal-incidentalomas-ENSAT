@@ -115,7 +115,7 @@ public class DataComparison extends Fragment {
     }
     private void startToShowComparisonData(String msg){
         Intent intent = new Intent(getActivity(),SingleComparison.class);
-        intent.putExtra("searchName",msg);
+        intent.putExtra("searchComparisonName",msg);
         startActivity(intent);
     }
 

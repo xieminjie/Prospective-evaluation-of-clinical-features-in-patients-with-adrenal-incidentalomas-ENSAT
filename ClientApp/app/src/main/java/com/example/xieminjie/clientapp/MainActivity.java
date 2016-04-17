@@ -37,14 +37,12 @@ public class MainActivity extends AppCompatActivity {
     private String userid;
     public static final String TAG="myActivity";
     private  ClientApplication app;
-    private IOStorageHandler ioStorageHandler;
-    private DateHandler dateHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initInterface();
-        ioStorageHandler.readRecordLog("record.csv",getApplicationContext());
+        IOStorageHandler.readRecordLog("record.csv",getApplicationContext());
     }
     @Override
     protected void onStart() {
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         String result = data.getString("userNum");
                         if (result.equals("1")) {
-                            ioStorageHandler.printUserID("user",userid,getApplicationContext());
+                            IOStorageHandler.printUserID("user",userid,getApplicationContext());
                             startToLogin();
                         } else {
                             loginTextField.setText("");
