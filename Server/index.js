@@ -26,6 +26,12 @@ app.get('/',function(req,res){
 
 
 io.on('connection', function(socket){
+  socket.on('send test msg',function(){
+    console.log('test');
+    socket.emit('reply test','helloworld');
+  });
+
+
   //console.log('a user connected');
   socket.on('send login request', function(msg){
     eventEmitter.emit('user query from database',msg);    
