@@ -1,6 +1,7 @@
 package com.example.xieminjie.clientapp;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 
 /**
@@ -27,7 +38,6 @@ public class DataComparison extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -36,6 +46,9 @@ public class DataComparison extends Fragment {
     // UI elements
     private LinearLayout linearLayout;
     private LinearLayout myll;
+
+    private ClientApplication app;
+    private Socket socket;
 
 
     public static DataComparison newInstance(String param1, String param2) {
@@ -73,23 +86,24 @@ public class DataComparison extends Fragment {
 
     private LinearLayout createMyll(Activity activity){
         LinearLayout ll = createll(activity);
-        Button averageDataBtn = createButton(activity,"Average Data");
+      /*  Button averageDataBtn = createButton(activity,"Average Data");
         averageDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startToShowOveralData();
             }
-        });
+        });*/
         final EditText comparisonEditInput = createEditText(getActivity());
         Button singleComparisonBtn = createButton(activity, "Single Comparison");
         singleComparisonBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 String msg = comparisonEditInput.getText().toString();
+
                 startToShowComparisonData(msg);
             }
         });
-        ll.addView(averageDataBtn);
+      //  ll.addView(averageDataBtn);
         ll.addView(comparisonEditInput);
         ll.addView(singleComparisonBtn);
         return ll;
@@ -114,11 +128,31 @@ public class DataComparison extends Fragment {
         startActivity(intent);
     }
     private void startToShowComparisonData(String msg){
+        app = (ClientApplication)getActivity().getApplication();
+        socket = app.getSocket();
+        socket.connect();
+        socket.emit("single data request", "ill");
+        socket.on("reply single data", getOveralData);
+    }
+    private Emitter.Listener getOveralData = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Gson gson = new Gson();
+                    ArrayList arrayList = new ArrayList();
+                    System.out.println(args[0].toString());
+                    intentTodata(args[0].toString());
+                }
+            });
+        }
+    };
+    private void intentTodata(String str){
         Intent intent = new Intent(getActivity(),SingleComparison.class);
-        intent.putExtra("searchComparisonName",msg);
+        intent.putExtra("searchComparisonName",str);
         startActivity(intent);
     }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

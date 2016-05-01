@@ -35,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
         socket.on("login reply", loginReply);
         socket.connect();
     }
-
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        socket.disconnect();
+    }
     private void initInterface(){
         loginTextField = (EditText)findViewById(R.id.main_loginTextField);
         loginBtn = (Button)findViewById(R.id.main_loginBtn);
