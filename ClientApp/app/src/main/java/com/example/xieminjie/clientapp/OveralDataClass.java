@@ -1,13 +1,12 @@
 package com.example.xieminjie.clientapp;
 
-import java.util.Hashtable;
-
 /**
- * Created by xieminjie on 25/03/2016.
+ * Created by xieminjie on 24/04/2016.
  */
-public class Record {
+public class OveralDataClass {
     private int problem;
     private int ill;
+    private String user_record;
     private int palpitations;
     private int weight_gain;
     private int high_blood_pressure;
@@ -21,11 +20,9 @@ public class Record {
     private int fatigue;
     private int panic;
     private int sadness;
-    private String record_date;
+    private int body_hair_growth;
 
-    public Record(int problem, int ill, int palpitations, int weight_gain, int high_blood_pressure, int muscle_weakness, int sweating, int flushing, int headache, int chest_pain, int back_pain, int bruising, int fatigue, int panic, int sadness, String record_date) {
-        this.problem = problem;
-        this.ill = ill;
+    public OveralDataClass(int palpitations, int weight_gain, int high_blood_pressure, int muscle_weakness, int sweating, int flushing, int headache, int chest_pain, int back_pain, int bruising, int fatigue, int panic, int sadness,int body_hair_growth) {
         this.palpitations = palpitations;
         this.weight_gain = weight_gain;
         this.high_blood_pressure = high_blood_pressure;
@@ -39,29 +36,9 @@ public class Record {
         this.fatigue = fatigue;
         this.panic = panic;
         this.sadness = sadness;
-        this.record_date = record_date;
+        this.body_hair_growth = body_hair_growth;
     }
 
-    public Hashtable getRecordHashTable(){
-        Hashtable<String,String> hashtable = new Hashtable();
-        hashtable.put("problem","0");
-        hashtable.put("ill","1");
-        hashtable.put("palpitations","2");
-        hashtable.put("weight_gain","3");
-        hashtable.put("high_blood_pressure","4");
-        hashtable.put("muscle_weakness","5");
-        hashtable.put("sweating","6");
-        hashtable.put("flushing","7");
-        hashtable.put("headache","8");
-        hashtable.put("chest_pain","9");
-        hashtable.put("back_pain","10");
-        hashtable.put("bruising","11");
-        hashtable.put("fatigue","12");
-        hashtable.put("panic","13");
-        hashtable.put("sadness","14");
-        hashtable.put("record_date","15");
-        return hashtable;
-    }
     public int getProblem() {
         return problem;
     }
@@ -76,6 +53,14 @@ public class Record {
 
     public void setIll(int ill) {
         this.ill = ill;
+    }
+
+    public String getUser_record() {
+        return user_record;
+    }
+
+    public void setUser_record(String user_record) {
+        this.user_record = user_record;
     }
 
     public int getPalpitations() {
@@ -182,11 +167,11 @@ public class Record {
         this.sadness = sadness;
     }
 
-    public String getRecord_date() {
-        return record_date;
+    public int getBody_hair_growth() {
+        return body_hair_growth;
     }
 
-    public void setRecord_date(String record_date) {
-        this.record_date = record_date;
+    public void setBody_hair_growth(int body_hair_growth) {
+        this.body_hair_growth = body_hair_growth;
     }
 }

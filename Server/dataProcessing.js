@@ -1,8 +1,8 @@
 var exports = module.exports = {
 
 	chartGraphdataProcessing:function(result){
-		    var count = result.length;
-  		  var weightgainOveral = 0;
+		var count = result.length;
+  		var weightgainOveral = 0;
         var palpitationsOveral = 0;
         var highBloodOveral= 0;
         var muscleweaknessOveral = 0;
@@ -79,7 +79,7 @@ var exports = module.exports = {
         dataObject.sadness = sadnessAverage;
         dataObject.body_hair_growth = bodyHairGrowthAverage;
         msg = JSON.stringify(dataObject);
-  			return msg;
+  		return msg;
 	}
 
 };

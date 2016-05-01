@@ -2,8 +2,8 @@ package com.example.xieminjie.clientapp;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -11,12 +11,7 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -24,9 +19,6 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
     private Toolbar toolbar;
     private SearchView searchView;
     private String query;
-    private ArrayList<Record> arrayList;
-    private Hashtable hashtable;
-    private Record record;
     private int index;
     private BarChart barChart;
     private ChartHandler chartHandler;
@@ -48,13 +40,14 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
         Intent intent = getIntent();
         query = intent.getStringExtra("searchName");
         index = DataProcessingHandler.getIndex(query);
+
         chartHandler = new ChartHandler();
 
         dateArrayList = IOStorageHandler.readData("record.csv", 15, getApplicationContext());
         dataArrayList = IOStorageHandler.readData("record.csv", index, getApplicationContext());
         dateArray = DataProcessingHandler.dateProcessing(dateArrayList);
         dataArray = DataProcessingHandler.dateProcessing(dataArrayList);
-        chartHandler.createChart(index, barChart, query,dateArray,dataArray);
+        chartHandler.createChart(barChart, query,dateArray,dataArray);
 
     }
     @Override
@@ -86,7 +79,7 @@ public class RecordDetail extends AppCompatActivity implements SearchView.OnQuer
         dataArrayList = IOStorageHandler.readData("record.csv", index, getApplicationContext());
         dateArray = DataProcessingHandler.dateProcessing(dateArrayList);
         dataArray = DataProcessingHandler.dateProcessing(dataArrayList);
-        chartHandler.createChart(index, barChart, query,dateArray,dataArray);
+        chartHandler.createChart(barChart, query,dateArray,dataArray);
         return false;
     }
 

@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Created by xieminjie on 13/04/2016.
  */
 public class ChartHandler {
-    public void createChart(int index,BarChart barChart,String query,ArrayList<String> dateArray,ArrayList<String> dataArray){
+    public void createChart(BarChart barChart,String query,ArrayList<String> dateArray,ArrayList<String> dataArray){
         BarData data = new BarData(getXAxisValues(dateArray),getDataSet(dataArray,query));
         barChart.setData(data);
         barChart.setDescription("My Chart");

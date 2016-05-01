@@ -4,11 +4,10 @@
     tools:context="com.example.xieminjie.clientapp.SingleComparison">
     <include android:id="@+id/navbar"
         layout="@layout/nav_bar"/>
-    <SearchView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/dataComparison_SearchView"
-        android:background="@color/searchBg"
-        android:layout_below="@+id/navbar" />
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/singlechart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/navbar"/>
 
 </RelativeLayout>
