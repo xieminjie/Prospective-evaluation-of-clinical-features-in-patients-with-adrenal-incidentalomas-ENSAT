@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,9 +99,9 @@ public class DataComparison extends Fragment {
         singleComparisonBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String msg = comparisonEditInput.getText().toString();
+                String query = comparisonEditInput.getText().toString();
 
-                startToShowComparisonData(msg);
+                startToShowComparisonData(query);
             }
         });
       //  ll.addView(averageDataBtn);
@@ -127,23 +128,22 @@ public class DataComparison extends Fragment {
         Intent intent = new Intent(getActivity(), OverallData.class);
         startActivity(intent);
     }
-    private void startToShowComparisonData(String msg){
+    private void startToShowComparisonData(String query){
         app = (ClientApplication)getActivity().getApplication();
         socket = app.getSocket();
         socket.connect();
-        socket.emit("single data request", "ill");
+        socket.emit("single data request", query);
         socket.on("reply single data", getOveralData);
     }
+
     private Emitter.Listener getOveralData = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Gson gson = new Gson();
-                    ArrayList arrayList = new ArrayList();
-                    System.out.println(args[0].toString());
-                    intentTodata(args[0].toString());
+                    String msg = args[0].toString();
+                    Log.d("myDate",msg);
                 }
             });
         }

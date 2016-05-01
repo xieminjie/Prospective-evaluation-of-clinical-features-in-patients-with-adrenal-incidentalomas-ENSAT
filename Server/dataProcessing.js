@@ -1,4 +1,5 @@
 var exports = module.exports = {
+
 	chartGraphdataProcessing:function(result){
 		var count = result.length;
   		var weightgainOveral = 0;

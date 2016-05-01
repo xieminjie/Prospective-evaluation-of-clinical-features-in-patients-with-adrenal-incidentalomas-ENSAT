@@ -33,8 +33,6 @@ io.on('connection', function(socket){
 	});
 	socket.on('single data request',function(msg){
 	  eventEmitter.emit('single query from database',msg);
-		socket.emit('reply single data',msg);
-		console.log("single data request "+msg);
 	});
 	socket.on('send question Data',function(msg){
 		var message = JSON.parse(msg);
@@ -87,15 +85,48 @@ eventEmitter.on('user query from database',function(msg){
 
 eventEmitter.on('single query from database',function(msg){
 	console.log("calling database");
-	connection.query('SELECT * FROM research.record;',msg,function(err,result){
+	connection.query('SELECT * FROM research.record;',function(err,result){
 		if(err) {
 				console.log('err');
 				throw err;
 			}
 			else {
-				var msg = dataProcessing.chartGraphdataProcessing(result);
-				console.log("msg "+msg);
-				eventEmitter.emit("single data",msg);
+				var result = dataProcessing.chartGraphdataProcessing(result);
+				var data = JSON.parse(result);
+				var returnmsg = 'null';
+				console.log("msg "+data);
+				var hashtable = new Object();
+				if(msg=='weightgain'){
+					console.log("da"+data.weight_gain);
+					returnmsg = data.weight_gain;
+				}else if (msg=='palpitations'){
+					returnmsg = data.palpitations;
+				}else if(msg=='highBloodPressure'){
+					returnmsg = data.high_blood_pressure
+				}else if(msg=='muscleWeakness'){
+					returnmsg = data.muscle_weakness;
+				}else if(msg=='sweating'){
+					returnmsg = data.sweating;
+				}else if(msg=='flushing'){
+					returnmsg = data.flushing;
+				}else if(msg=='headache'){
+					returnmsg = data.headache;
+				}else if(msg=='chestPain'){
+					returnmsg = data.chest_pain;
+				}else if(msg=='backPain'){
+					returnmsg = data.back_pain;
+				}else if(msg=='bruising'){
+					returnmsg = data.bruising;
+				}else if(msg=='fatigue'){
+					returnmsg = data.fatigue;
+				}else if(msg=='panic'){
+					returnmsg = data.panic;
+				}else if(msg=='sadness'){
+					returnmsg = data.sadness;
+				}else{
+					returnmsg = 'null';
+				}
+				eventEmitter.emit("single data",returnmsg);
 			}
 	 });
 });

@@ -41,6 +41,7 @@ public class Record {
         this.sadness = sadness;
         this.record_date = record_date;
     }
+
     public Hashtable getRecordHashTable(){
         Hashtable<String,String> hashtable = new Hashtable();
         hashtable.put("problem","0");
