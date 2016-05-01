@@ -50,6 +50,9 @@ public class DataComparison extends Fragment {
 
     private ClientApplication app;
     private Socket socket;
+    private Gson gson;
+    private CompareObject obj;
+    private TextView compareTextView;
 
 
     public static DataComparison newInstance(String param1, String param2) {
@@ -104,9 +107,11 @@ public class DataComparison extends Fragment {
                 startToShowComparisonData(query);
             }
         });
+        compareTextView =  createTextView(getActivity());
       //  ll.addView(averageDataBtn);
         ll.addView(comparisonEditInput);
         ll.addView(singleComparisonBtn);
+        ll.addView(compareTextView);
         return ll;
     }
     public LinearLayout createll(Activity activity){
@@ -124,6 +129,10 @@ public class DataComparison extends Fragment {
         EditText editText = new EditText(activity);
         return editText;
     }
+    public TextView createTextView(Activity activity){
+        compareTextView= new TextView(activity);
+        return compareTextView;
+    }
     private void startToShowOveralData(){
         Intent intent = new Intent(getActivity(), OverallData.class);
         startActivity(intent);
@@ -135,15 +144,24 @@ public class DataComparison extends Fragment {
         socket.emit("single data request", query);
         socket.on("reply single data", getOveralData);
     }
-
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        socket.disconnect();
+    }
     private Emitter.Listener getOveralData = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
-            getActivity().runOnUiThread(new Runnable() {
+           getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     String msg = args[0].toString();
-                    Log.d("myDate",msg);
+                    if(msg.equals("null")){
+                        //alert
+                    }else{
+                        compareTextView.setText("Average: "+msg);
+
+                    }
                 }
             });
         }
@@ -153,7 +171,6 @@ public class DataComparison extends Fragment {
         intent.putExtra("searchComparisonName",str);
         startActivity(intent);
     }
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

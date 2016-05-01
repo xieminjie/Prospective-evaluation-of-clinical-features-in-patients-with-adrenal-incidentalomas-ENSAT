@@ -18,29 +18,42 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 public class SingleComparison extends AppCompatActivity {
-    private String query;
+    private String averageValue;
     private Toolbar toolbar;
-    private ClientApplication app;
-    private Socket socket;
     private Gson gson;
     private ChartHandler chartHandler;
     private BarChart barChart;
     private ArrayList<String> xArray;
     private ArrayList<String> yArray;
     private int value;
-    @Override
+    private CompareObject data;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        query = intent.getStringExtra("searchComparisonName");
-        Log.d("mydata",query);
+        String json = intent.getStringExtra("searchComparisonName");
         setContentView(R.layout.activity_single_comparison);
         toolbar = (Toolbar)findViewById(R.id.navbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitleTextColor(Color.WHITE);
-        barChart = (BarChart)findViewById(R.id.singlechart);
+      /*  Log.d("mydata",json);
+        gson = new Gson();
+        data= gson.fromJson(json,CompareObject.class);
+        String individualVal = data.getIndividual();
+        String averageVal = data.getAverage();
+        Log.d("mydata",individualVal+"indvidual");
+        xArray = new ArrayList<>();
+        yArray = new ArrayList<>();
+        xArray.add("you");
+        xArray.add("average");
+        yArray.add(individualVal);
+        yArray.add(averageVal);
 
+
+        barChart = (BarChart)findViewById(R.id.singlechart);
+        chartHandler = new ChartHandler();*/
+      //  chartHandler.createChart(barChart,"compare",xArray,yArray);
     }
 
     @Override
@@ -53,12 +66,6 @@ public class SingleComparison extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
     }
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        socket.disconnect();
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
