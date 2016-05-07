@@ -28,10 +28,11 @@ app.get('/',function(req,res){
 
 io.on('connection', function(socket){
 
-	socket.on('request code',function(){
-		console.log('request code');
-		io.emit('receive code',randomstring.generate(5));
+	socket.on('request code',function(msg){
+		console.log('request code '+msg);
+		io.emit('receive code',randomstring.generate(parseInt(msg)));
 	});
+	
 	//console.log('a user connected');
 	socket.on('send login request', function(msg){
 		eventEmitter.emit('user query from database',msg);    

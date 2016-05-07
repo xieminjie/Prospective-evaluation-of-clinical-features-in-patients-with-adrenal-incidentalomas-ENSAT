@@ -6,17 +6,23 @@ $(document).ready(function(){
     receiveData(socket);
     var request = $('#requestVal').val();
     socket.emit('doc search',request);
-    receiveCode(socket);
 });
 var sentCodeRequest = function(socket){
     var requestBtn = $('#sendRequest');
     requestBtn.click(function(){
-        socket.emit('request code');
+        var length = $('#requestVal').val();
+        if(length){
+            socket.emit('request code',length);
+            receiveCode(socket);
+        }else{
+            alert('please enter the length of code');
+        }
     });
 }
 var receiveCode = function(socket){
     socket.on('receive code',function(msg){
-        $('#requestVal').val(msg);
+        alert("the code is: "+msg);
+       // $('#requestVal').val(msg);
     });
 }
 var receiveData = function(socket){
