@@ -8,6 +8,7 @@ var eventEmitter = new events.EventEmitter();
 var mysql = require('mysql');
 //Customize modules
 var dataProcessing = require("./dataProcessing.js");
+var randomstring = require('randomstring');
 
 
 app.use(express.static('views'));
@@ -27,6 +28,10 @@ app.get('/',function(req,res){
 
 io.on('connection', function(socket){
 
+	socket.on('request code',function(){
+		console.log('request code');
+		io.emit('receive code',randomstring.generate(5));
+	});
 	//console.log('a user connected');
 	socket.on('send login request', function(msg){
 		eventEmitter.emit('user query from database',msg);    
