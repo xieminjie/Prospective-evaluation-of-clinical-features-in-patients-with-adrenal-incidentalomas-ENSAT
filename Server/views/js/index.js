@@ -1,19 +1,26 @@
 
 $(document).ready(function(){
-	var socket = io();
-	renderBarChart();
-	sentDataRequest(socket);
-	receiveData(socket);
+    var socket = io();
+    renderBarChart();
+    sentCodeRequest(socket);
+    receiveData(socket);
+    var request = $('#requestVal').val();
+    socket.emit('doc search',request);
+    receiveCode(socket);
 });
-var sentDataRequest = function(socket){
-	var requestBtn = $('#sendRequest');
-	requestBtn.click(function(){
-		var request = $('#requestVal').val();
-		socket.emit('doc search',request);
-	});
+var sentCodeRequest = function(socket){
+    var requestBtn = $('#sendRequest');
+    requestBtn.click(function(){
+        socket.emit('request code');
+    });
+}
+var receiveCode = function(socket){
+    socket.on('receive code',function(msg){
+        $('#requestVal').val(msg);
+    });
 }
 var receiveData = function(socket){
-	socket.on('receive overall search',function(msg){
+    socket.on('receive overall search',function(msg){
         var title = 'patientData';
         var ytitle = 'point';
         var categoriesArray = ['weight_gain','palpitations','muscle_weakness',
@@ -30,10 +37,10 @@ var receiveData = function(socket){
             data: dataArray
         }];
         renderBarChart(categoriesArray,value,title,ytitle);
-	});
+    });
 }
 function renderBarChart(categoriesArray,value,title,ytitle){
-	$('#container').highcharts({
+    $('#container').highcharts({
         chart: {
             type: 'bar'
         },
