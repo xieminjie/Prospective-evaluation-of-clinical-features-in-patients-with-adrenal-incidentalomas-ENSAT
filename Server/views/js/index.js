@@ -21,8 +21,7 @@ var sentCodeRequest = function(socket){
 }
 var receiveCode = function(socket){
     socket.on('receive code',function(msg){
-        alert("the code is: "+msg);
-       // $('#requestVal').val(msg);
+        $('#code').append('<p>Code<p>'+msg);
     });
 }
 var receiveData = function(socket){
