@@ -90,14 +90,8 @@ public class DataComparison extends Fragment {
 
     private LinearLayout createMyll(Activity activity){
         LinearLayout ll = createll(activity);
-      /*  Button averageDataBtn = createButton(activity,"Average Data");
-        averageDataBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startToShowOveralData();
-            }
-        });*/
         final EditText comparisonEditInput = createEditText(getActivity());
+        final TextView textView = createaText(getActivity());
         Button singleComparisonBtn = createButton(activity, "Single Comparison");
         singleComparisonBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -108,11 +102,17 @@ public class DataComparison extends Fragment {
             }
         });
         compareTextView =  createTextView(getActivity());
-      //  ll.addView(averageDataBtn);
+        ll.addView(textView);
         ll.addView(comparisonEditInput);
         ll.addView(singleComparisonBtn);
         ll.addView(compareTextView);
         return ll;
+    }
+    public TextView createaText (Activity activity){
+        TextView textView = new TextView(activity);
+        textView.setText("Please enter the item");
+        textView.setPadding(0, 450, 0, 0);
+        return textView;
     }
     public LinearLayout createll(Activity activity){
         LinearLayout surveyLayout = new LinearLayout(activity);
@@ -160,7 +160,8 @@ public class DataComparison extends Fragment {
                         //alert
                     }else{
                         compareTextView.setText("Average: "+msg);
-
+                        compareTextView.setTextSize(18);
+                        compareTextView.setPadding(400,300,0,0);
                     }
                 }
             });

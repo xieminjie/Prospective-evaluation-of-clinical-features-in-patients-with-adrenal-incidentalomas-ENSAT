@@ -157,6 +157,7 @@ public class SurveyFragment extends Fragment {
     public TextView createText (Activity activity){
         TextView textView = new TextView(activity);
         textView.setText("You have already finished the survey today");
+        textView.setPadding(130,600,0,0);
         return textView;
     }
     public Button createProblemBtn (Activity activity){

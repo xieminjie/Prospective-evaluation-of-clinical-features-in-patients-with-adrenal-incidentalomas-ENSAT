@@ -37,23 +37,6 @@ public class SingleComparison extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitleTextColor(Color.WHITE);
-      /*  Log.d("mydata",json);
-        gson = new Gson();
-        data= gson.fromJson(json,CompareObject.class);
-        String individualVal = data.getIndividual();
-        String averageVal = data.getAverage();
-        Log.d("mydata",individualVal+"indvidual");
-        xArray = new ArrayList<>();
-        yArray = new ArrayList<>();
-        xArray.add("you");
-        xArray.add("average");
-        yArray.add(individualVal);
-        yArray.add(averageVal);
-
-
-        barChart = (BarChart)findViewById(R.id.singlechart);
-        chartHandler = new ChartHandler();*/
-      //  chartHandler.createChart(barChart,"compare",xArray,yArray);
     }
 
     @Override
