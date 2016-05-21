@@ -2,6 +2,7 @@ package com.example.xieminjie.clientapp;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,16 +14,16 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.Date;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import io.socket.client.Socket;
+import java.util.ArrayList;
+
 
 public class SurveyDetails extends AppCompatActivity {
     private Toolbar toolbar;
     public static final String TAG="myActivity";
     private Button sendBtn;
-    private Socket socket;
     ArrayList<Question> questions;
     private Message message;
     //Message variables
@@ -72,9 +73,15 @@ public class SurveyDetails extends AppCompatActivity {
                 user_record = ioStorageHandler.readUserID("user", getApplicationContext());
 
                 message = new Message(problem,ill,palpitations,weight_gain,high_blood_pressure,muscle_weakness,sweating,flushing,headache,chest_pain,back_pain,bruising,fatigue,panic,sadness,user_record);
-                String json = ConvertToJson(message);
-                ioStorageHandler.printRecordLog("record.csv",message,getApplicationContext());
-                sendData(json,socket);
+                String data = ConvertToJson(message);
+              //  ioStorageHandler.printRecordLog("record.csv",message,getApplicationContext());
+               // sendData(json,socket);
+                NetworkHandler myTask = new NetworkHandler();
+                RequestPackage requestPackage = new RequestPackage();
+                requestPackage.setMethod("POST");
+                requestPackage.setUri(Params.CHAT_SERVER_URL + "/survey");
+                requestPackage.setParam("survey",data.toString());
+                myTask.execute(requestPackage);
                 backtoMain();
             }
         });
@@ -90,9 +97,6 @@ public class SurveyDetails extends AppCompatActivity {
         listView.setAdapter(adapter);
         sendBtn = (Button)findViewById(R.id.question_btn);
     }
-    private void sendData(String str, Socket socket){
-        socket.emit("send question Data",str);
-    }
     private void backtoMain(){
         Intent intent = new Intent(this, TabbedDrawer.class);
         startActivity(intent);
@@ -100,14 +104,10 @@ public class SurveyDetails extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        ClientApplication app = (ClientApplication)this.getApplication();
-        socket = app.getSocket();
-        socket.connect();
     }
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        socket.disconnect();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -132,5 +132,31 @@ public class SurveyDetails extends AppCompatActivity {
         String userID="";
 
         return userID;
+    }
+    private class NetworkHandler extends AsyncTask<RequestPackage,String,String> {
+        //has access to Main thread
+        @Override
+        protected void onPreExecute(){
+            //do before task doing in background
+        }
+        @Override
+        protected String doInBackground(RequestPackage... strings) {
+            String data = HttpManager.getData(strings[0]);
+            return data;
+        }
+        @Override
+        protected void onPostExecute(String result){
+            if(result==null){
+                Log.d("myData", "null");
+            }else{
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(result);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

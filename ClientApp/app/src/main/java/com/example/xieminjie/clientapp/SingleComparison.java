@@ -2,20 +2,14 @@ package com.example.xieminjie.clientapp;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.github.mikephil.charting.charts.BarChart;
 import com.google.gson.Gson;
-
 import java.util.ArrayList;
-
-import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 
 public class SingleComparison extends AppCompatActivity {
     private String averageValue;

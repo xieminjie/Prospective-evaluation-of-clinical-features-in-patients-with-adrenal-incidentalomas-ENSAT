@@ -1,9 +1,9 @@
 package com.example.xieminjie.clientapp;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,13 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -47,8 +44,6 @@ public class DataComparison extends Fragment {
     // UI elements
     private LinearLayout linearLayout;
     private LinearLayout myll;
-
-    private ClientApplication app;
     private Socket socket;
     private Gson gson;
     private CompareObject obj;
@@ -138,11 +133,17 @@ public class DataComparison extends Fragment {
         startActivity(intent);
     }
     private void startToShowComparisonData(String query){
-        app = (ClientApplication)getActivity().getApplication();
-        socket = app.getSocket();
-        socket.connect();
-        socket.emit("single data request", query);
-        socket.on("reply single data", getOveralData);
+//        app = (ClientApplication)getActivity().getApplication();
+//        socket = app.getSocket();
+//        socket.connect();
+//        socket.emit("single data request", query);
+//        socket.on("reply single data", getOveralData);
+        NetworkHandler myTask = new NetworkHandler();
+        RequestPackage requestPackage = new RequestPackage();
+        requestPackage.setMethod("GET");
+        requestPackage.setUri(Params.CHAT_SERVER_URL + "/comparison");
+        requestPackage.setParam("query",query);
+        myTask.execute(requestPackage);
     }
     @Override
     public void onDestroy(){
@@ -188,6 +189,33 @@ public class DataComparison extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    private class NetworkHandler extends AsyncTask<RequestPackage,String,String> {
+        //has access to Main thread
+        @Override
+        protected void onPreExecute(){
+            //do before task doing in background
+        }
+        @Override
+        protected String doInBackground(RequestPackage... strings) {
+            String data = HttpManager.getData(strings[0]);
+            return data;
+        }
+        @Override
+        protected void onPostExecute(String result){
+            if(result==null){
+                Log.d("myData", "null");
+            }else{
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(result);
+                    Log.d("myData",jsonObject.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }
