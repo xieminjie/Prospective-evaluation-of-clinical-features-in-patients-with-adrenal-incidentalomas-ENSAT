@@ -109,8 +109,7 @@ public class SurveyFragment extends Fragment {
         String user_record = IOStorageHandler.readUserID("user", getContext());
         message = new Message(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,user_record);
         String json = ConvertToJson(message);
-        Log.d("myData","hello"+json);
-        Log.d("myData","world"+json.toString());
+
      //   IOStorageHandler.printRecordLog("record.csv", message, getContext());
         NetworkHandler myTask = new NetworkHandler();
         RequestPackage requestPackage = new RequestPackage();
@@ -186,12 +185,6 @@ public class SurveyFragment extends Fragment {
                 Log.d("myData", "null");
             }else{
                 Log.d("myData",result);
-//                try {
-//                    //jsonObject = new JSONObject(result);
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
             }
         }
     }

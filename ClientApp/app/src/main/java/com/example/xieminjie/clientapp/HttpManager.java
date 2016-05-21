@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -29,12 +30,13 @@ public class HttpManager {
             URL url = new URL(uri);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(p.getMethod());
-
             if(p.getMethod().equals("POST")){
                 con.setDoOutput(true);//allow output some content on body request
-                OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());
-                Log.d("myData", p.getJsonData());
+                con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+               // OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());
                 JSONObject jsonObject = new JSONObject(p.getJsonData());
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(con.getOutputStream()));
+                Log.d("myData", jsonObject.toString());
                 writer.write(jsonObject.toString());
                 writer.flush();
             }

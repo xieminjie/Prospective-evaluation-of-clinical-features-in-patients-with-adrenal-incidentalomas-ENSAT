@@ -38,11 +38,11 @@ app.get('/login?',function(req,res){
 				var ifAuth;
 				var resultReply = {
 					status:true,
-				 	Authentication:result.length==0?ifAuth=false:ifAuth=true
+					Authentication:result.length==0?ifAuth=false:ifAuth=true
 				};
 				var gsonData = JSON.stringify(resultReply);
 				if(gsonData!=null){
-		 			res.send(gsonData);
+					res.send(gsonData);
 				}
 			}
 		});
@@ -94,11 +94,11 @@ app.get('/comparison?',function(req,res){
 				if(returnmsg!=null){
 					var resultReply = {
 						status:true,
-				 		comparisonResult:returnmsg
+						comparisonResult:returnmsg
 					};
 					var gsonData = JSON.stringify(resultReply);
 					if(gsonData!=null){
-		 				res.send(gsonData);
+						res.send(gsonData);
 					}
 				}
 			}
@@ -122,12 +122,12 @@ app.post('/survey',function(req,res){
 	var message = req.body;
 	console.log(message);
 	var query = connection.query('insert into record set ?',message, function (err, result) {
-			 if (err) {
-				 console.error(err);
-				 return;
-			 }
+		if (err) {
+			console.error(err);
+			return;
+		}
 		console.error(result);
-		});
+	});
 });
 
 
