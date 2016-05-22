@@ -41,6 +41,16 @@ app.get('/data',function(req,res){
 		}
 	});
 });
+app.get('/userCode',function(req,res){
+	var length = req.query['length'];
+	if(length){
+		var code = randomstring.generate(parseInt(length));
+		res.send(code);
+	}
+	console.log('user')
+	console.log(req.body);
+	console.log(req.query['length']);
+;});
 //app login route 
 app.get('/login?',function(req,res){
 	var userID = req.query['login'];

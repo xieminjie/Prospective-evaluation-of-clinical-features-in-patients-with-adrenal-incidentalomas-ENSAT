@@ -81,5 +81,4 @@ var exports = module.exports = {
         msg = JSON.stringify(dataObject);
   		return msg;
 	}
-
 };

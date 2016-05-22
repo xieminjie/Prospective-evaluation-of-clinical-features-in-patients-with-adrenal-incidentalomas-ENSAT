@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
 	loadData();
-	//sentCodeRequest(socket);
+	sentCodeRequest();
 	//receiveData(socket);
 	//var request = $('#requestVal').val();
 	//socket.emit('doc search',request);
@@ -21,6 +21,20 @@ var loadData = function(){
             }
     });
 }
+var getCode = function(length){
+	$.ajax({
+            type: "GET",
+            url: "/userCode",
+            contentType: 'application/json',
+            data:{length:length},
+            success: function(r) {
+            	alert("the code of user is: "+r);
+            },
+            error: function(r){
+                console.log("error");
+            }
+    });
+}
 var processData= function(msg){
 	var title = 'patientData';
 	var ytitle = 'point';
@@ -28,7 +42,6 @@ var processData= function(msg){
 		'sweating','flushing','headache','chest_pain','back_pain','bruising',
 		'fatigue','panic','sadness','body_hair_growth'];
 	var data = JSON.parse(msg);
-	console.log(data);
 	var dataArray =  [data.weight_gain,data.palpitations,data.muscle_weakness,data.sweating,
 	data.flushing,data.headache,data.chest_pain,data.back_pain,data.bruising,data.fatigue,
 	data.panic,data.sadness,data.body_hair_growth];
@@ -39,28 +52,18 @@ var processData= function(msg){
 	}];
 	renderBarChart(categoriesArray,value,title,ytitle);
 }
-var sentCodeRequest = function(socket){
+var sentCodeRequest = function(){
 	var requestBtn = $('#sendRequest');
 	requestBtn.click(function(){
 		var length = $('#requestVal').val();
 		if(length){
-			socket.emit('request code',length);
-			receiveCode(socket);
+			getCode(length);
 		}else{
 			alert('please enter the length of code');
 		}
 	});
 }
-var receiveCode = function(socket){
-	socket.on('receive code',function(msg){
-		$('#code').append('<p>Code<p>'+msg);
-	});
-}
-var receiveData = function(socket){
-	socket.on('receive overall search',function(msg){
-		
-	});
-}
+
 var renderBarChart = function (categoriesArray,value,title,ytitle){
 	$('#container').highcharts({
 		chart: {
