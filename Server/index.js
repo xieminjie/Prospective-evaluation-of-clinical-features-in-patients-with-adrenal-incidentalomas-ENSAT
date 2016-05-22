@@ -150,7 +150,7 @@ eventEmitter.on('overall query from database',function(msg){
 		else {
 			eventEmitter.emit('chartGraphdataProcessing',result);
 		}
-	 });
+	});
 });
 
 eventEmitter.on('chartGraphdataProcessing',function(result){

@@ -21,8 +21,25 @@ var connection = mysql.createConnection({
 	database: 'research'
 });
 connection.connect();
+
 app.get('/',function(req,res){
 	res.sendFile(__dirname+'/views/html/index.html');
+});
+app.get('/data',function(req,res){
+	connection.query('SELECT * FROM research.record;',function(err,result){
+		if(err) {
+			console.log('err');
+			throw err;
+		}
+		else {
+			var data = dataProcessing.chartGraphdataProcessing(result);
+			console.log(data);
+			if(data!=null){
+				console.log('sending');
+				res.send(data);
+			}
+		}
+	});
 });
 //app login route 
 app.get('/login?',function(req,res){
@@ -104,17 +121,6 @@ app.get('/comparison?',function(req,res){
 				}
 			}
 	 });
-});
-app.post('/',function(req,res){
-	var userID = req.body;
-	console.log(userID);
-	res.send('get:'+userID);
-
-});
-
-app.post('/', function (req, res) {
-	console.log("get a post");
-	res.send('POST request to the homepage');
 });
 
 app.post('/survey',function(req,res){
