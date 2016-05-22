@@ -75,6 +75,7 @@ public class SurveyDetails extends AppCompatActivity {
                 message = new Message(problem,ill,palpitations,weight_gain,high_blood_pressure,muscle_weakness,sweating,flushing,headache,chest_pain,back_pain,bruising,fatigue,panic,sadness,user_record);
                 String data = ConvertToJson(message);
                 ioStorageHandler.printRecordLog("record.csv",message,getApplicationContext());
+                backtoMain();
                 NetworkHandler myTask = new NetworkHandler();
                 RequestPackage requestPackage = new RequestPackage();
                 requestPackage.setMethod("POST");
@@ -141,9 +142,8 @@ public class SurveyDetails extends AppCompatActivity {
         protected void onPostExecute(String result){
             if(result==null){
                 Log.d("myData", "null");
-            }else{
+            } else {
                 Log.d("myData",result);
-                backtoMain();
             }
         }
     }

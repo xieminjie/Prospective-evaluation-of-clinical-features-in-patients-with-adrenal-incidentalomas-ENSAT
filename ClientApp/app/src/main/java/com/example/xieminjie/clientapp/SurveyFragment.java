@@ -74,7 +74,6 @@ public class SurveyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_survey, container, false);
         linearLayout = (LinearLayout)view.findViewById(R.id.survey_fragment_linearLayout);
-      //  myll = createMyll(getActivity());
         if(ifDone){
             myll = creaateall(getActivity());
         }else {
@@ -109,18 +108,18 @@ public class SurveyFragment extends Fragment {
         String user_record = IOStorageHandler.readUserID("user", getContext());
         message = new Message(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,user_record);
         String json = ConvertToJson(message);
-
         IOStorageHandler.printRecordLog("record.csv", message, getContext());
+        backtoMain();
         NetworkHandler myTask = new NetworkHandler();
         RequestPackage requestPackage = new RequestPackage();
         requestPackage.setMethod("POST");
         requestPackage.setUri(Params.CHAT_SERVER_URL + "/survey");
         requestPackage.setJsonData(json);
         myTask.execute(requestPackage);
-        backtoMain();
     }
     private void backtoMain(){
         Intent intent = new Intent(getActivity(), TabbedDrawer.class);
+        Log.d("myData","backToMain");
         startActivity(intent);
     }
     private String ConvertToJson (Message message){
@@ -183,7 +182,7 @@ public class SurveyFragment extends Fragment {
         protected void onPostExecute(String result){
             if(result==null){
                 Log.d("myData", "null");
-            }else{
+            } else {
                 Log.d("myData",result);
             }
         }
