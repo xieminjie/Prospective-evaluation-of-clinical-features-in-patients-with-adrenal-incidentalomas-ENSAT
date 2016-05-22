@@ -74,15 +74,13 @@ public class SurveyDetails extends AppCompatActivity {
 
                 message = new Message(problem,ill,palpitations,weight_gain,high_blood_pressure,muscle_weakness,sweating,flushing,headache,chest_pain,back_pain,bruising,fatigue,panic,sadness,user_record);
                 String data = ConvertToJson(message);
-              //  ioStorageHandler.printRecordLog("record.csv",message,getApplicationContext());
-               // sendData(json,socket);
+                ioStorageHandler.printRecordLog("record.csv",message,getApplicationContext());
                 NetworkHandler myTask = new NetworkHandler();
                 RequestPackage requestPackage = new RequestPackage();
                 requestPackage.setMethod("POST");
                 requestPackage.setUri(Params.CHAT_SERVER_URL + "/survey");
-                requestPackage.setParam("survey",data.toString());
+                requestPackage.setJsonData(data);
                 myTask.execute(requestPackage);
-                backtoMain();
             }
         });
     }
@@ -128,11 +126,6 @@ public class SurveyDetails extends AppCompatActivity {
         str = gson.toJson(message);
         return str;
     }
-    private String getUserID(){
-        String userID="";
-
-        return userID;
-    }
     private class NetworkHandler extends AsyncTask<RequestPackage,String,String> {
         //has access to Main thread
         @Override
@@ -149,14 +142,10 @@ public class SurveyDetails extends AppCompatActivity {
             if(result==null){
                 Log.d("myData", "null");
             }else{
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = new JSONObject(result);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Log.d("myData",result);
+                backtoMain();
             }
         }
     }
+
 }

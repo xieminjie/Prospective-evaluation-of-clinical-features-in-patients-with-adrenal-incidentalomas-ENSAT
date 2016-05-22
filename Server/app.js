@@ -49,7 +49,8 @@ app.get('/login?',function(req,res){
 	}
 });
 app.get('/comparison?',function(req,res){
-	var query = req.query['query'];
+	var msg = req.query['query'];
+	console.log('query '+msg);
 	connection.query('SELECT * FROM research.record;',function(err,result){
 		if(err) {
 				console.log('err');

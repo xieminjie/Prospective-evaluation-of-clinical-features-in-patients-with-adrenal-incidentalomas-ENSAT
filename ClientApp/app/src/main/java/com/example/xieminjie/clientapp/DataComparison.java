@@ -44,7 +44,6 @@ public class DataComparison extends Fragment {
     // UI elements
     private LinearLayout linearLayout;
     private LinearLayout myll;
-    private Socket socket;
     private Gson gson;
     private CompareObject obj;
     private TextView compareTextView;
@@ -133,45 +132,16 @@ public class DataComparison extends Fragment {
         startActivity(intent);
     }
     private void startToShowComparisonData(String query){
-//        app = (ClientApplication)getActivity().getApplication();
-//        socket = app.getSocket();
-//        socket.connect();
-//        socket.emit("single data request", query);
-//        socket.on("reply single data", getOveralData);
         NetworkHandler myTask = new NetworkHandler();
         RequestPackage requestPackage = new RequestPackage();
         requestPackage.setMethod("GET");
         requestPackage.setUri(Params.CHAT_SERVER_URL + "/comparison");
-        requestPackage.setParam("query",query);
+        requestPackage.setParam("query", query);
         myTask.execute(requestPackage);
     }
     @Override
     public void onDestroy(){
         super.onDestroy();
-        socket.disconnect();
-    }
-    private Emitter.Listener getOveralData = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-           getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    String msg = args[0].toString();
-                    if(msg.equals("null")){
-                        //alert
-                    }else{
-                        compareTextView.setText("Average: "+msg);
-                        compareTextView.setTextSize(18);
-                        compareTextView.setPadding(400,300,0,0);
-                    }
-                }
-            });
-        }
-    };
-    private void intentTodata(String str){
-        Intent intent = new Intent(getActivity(),SingleComparison.class);
-        intent.putExtra("searchComparisonName",str);
-        startActivity(intent);
     }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -210,7 +180,9 @@ public class DataComparison extends Fragment {
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(result);
-                    Log.d("myData",jsonObject.toString());
+                    compareTextView.setText("Average: " + jsonObject.get("comparisonResult").toString());
+                    compareTextView.setTextSize(18);
+                    compareTextView.setPadding(400,300,0,0);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
