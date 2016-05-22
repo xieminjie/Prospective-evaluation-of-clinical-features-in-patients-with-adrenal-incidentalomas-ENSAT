@@ -23,8 +23,11 @@ var connection = mysql.createConnection({
 connection.connect();
 
 app.get('/',function(req,res){
-	res.sendFile(__dirname+'/views/html/index.html');
+	res.sendFile(__dirname+'/views/html/dashboard.html');
 });
+app.get('/patient',function(req,res){
+	res.sendFile(__dirname+'/views/html/patient.html');
+})
 app.get('/data',function(req,res){
 	connection.query('SELECT * FROM research.record;',function(err,result){
 		if(err) {
