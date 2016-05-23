@@ -40,6 +40,7 @@ public class SurveyFragment extends Fragment {
     boolean ifDone;
     private ArrayList<Record> arrayList;
     private Message message;
+    private String record_date;
     // TODO: Rename and change types and number of parameters
     public static SurveyFragment newInstance(String param1, String param2) {
         SurveyFragment fragment = new SurveyFragment();
@@ -106,7 +107,8 @@ public class SurveyFragment extends Fragment {
 
     private void startToSendDate(){
         String user_record = IOStorageHandler.readUserID("user", getContext());
-        message = new Message(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,user_record);
+        record_date = DateHandler.getCurrentData();
+        message = new Message(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,user_record,record_date);
         String json = ConvertToJson(message);
         IOStorageHandler.printRecordLog("record.csv", message, getContext());
         backtoMain();
