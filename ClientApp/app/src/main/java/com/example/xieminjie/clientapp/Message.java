@@ -23,7 +23,7 @@ public class Message {
     private int body_hair_growth;
     private String record_date;
 
-    public Message(int problem, int ill,int palpitations, int weight_gain, int high_blood_pressure, int muscle_weakness, int sweating, int flushing, int headache, int chest_pain, int back_pain, int bruising, int fatigue, int panic, int sadness,String user_record) {
+    public Message(int problem, int ill,int palpitations, int weight_gain, int high_blood_pressure, int muscle_weakness, int sweating, int flushing, int headache, int chest_pain, int back_pain, int bruising, int fatigue, int panic, int sadness,String user_record,String record_date) {
 
         this.problem = problem;
         this.ill = ill;
@@ -41,6 +41,7 @@ public class Message {
         this.panic = panic;
         this.sadness = sadness;
         this.user_record = user_record;
+        this.record_date = record_date;
     }
 
     public int getProblem() {
@@ -169,5 +170,13 @@ public class Message {
 
     public void setSadness(int sadness) {
         this.sadness = sadness;
+    }
+
+    public String getRecord_date() {
+        return record_date;
+    }
+
+    public void setRecord_date(String record_date) {
+        this.record_date = record_date;
     }
 }
