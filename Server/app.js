@@ -28,6 +28,9 @@ app.get('/',function(req,res){
 app.get('/patient',function(req,res){
 	res.sendFile(__dirname+'/views/html/patient.html');
 })
+app.get('/patientStatisitc',function(req,res){
+	res.sendFile(__dirname+'/views/html/patientStastic.html')
+});
 app.get('/data',function(req,res){
 	connection.query('SELECT * FROM research.record;',function(err,result){
 		if(err) {
@@ -50,9 +53,6 @@ app.get('/userCode',function(req,res){
 		var code = randomstring.generate(parseInt(length));
 		res.send(code);
 	}
-	console.log('user')
-	console.log(req.body);
-	console.log(req.query['length']);
 ;});
 //app login route 
 app.get('/login?',function(req,res){
@@ -64,7 +64,6 @@ app.get('/login?',function(req,res){
 				throw err;
 			}
 			else {
-				console.log('length'+result.length);
 				var ifAuth;
 				var resultReply = {
 					status:true,
@@ -77,6 +76,16 @@ app.get('/login?',function(req,res){
 			}
 		});
 	}
+});
+app.post('/register?',function(req,res){
+	var msg = req.body;
+	var query = connection.query('insert into user set ?',msg, function (err, result) {
+		if (err) {
+			console.error(err);
+			return;
+		}
+		console.error(result);
+	});
 });
 app.get('/comparison?',function(req,res){
 	var msg = req.query['query'];
@@ -137,10 +146,7 @@ app.get('/comparison?',function(req,res){
 });
 
 app.post('/survey',function(req,res){
-	//var query = req.query['survey'];
-	//var message = JSON.parse(query);
 	var message = req.body;
-	console.log(message);
 	var query = connection.query('insert into record set ?',message, function (err, result) {
 		if (err) {
 			console.error(err);
@@ -149,6 +155,37 @@ app.post('/survey',function(req,res){
 		console.error(result);
 	});
 });
+app.get('/genderStastic?',function(req,res){
+	var gender = req.query['gender'];
+	var male = null;
+	var female = null;
+	var queryMale = connection.query('SELECT COUNT(iduser) as count from user where sex = ?','female',function(err,result){
+			if(err) {
+				console.log('err');
+				throw err;
+			}
+			else {
+				female = result[0].count;
+					var queryMale = connection.query('SELECT COUNT(iduser) as count from user where sex = ?','male',function(err,result){
+						if(err) {
+							console.log('err');
+							throw err;
+						}
+						else {
+							male = result[0].count;
+							var reply = {
+								male:male,
+								female:female
+							}
+							var msg = JSON.stringify(reply);
+							res.send(msg);
+						}
+				});
+			}
+	});
+});
+
+app.get('/ageStastic?',function(req,res){});
 
 
 app.listen(3000, function () {

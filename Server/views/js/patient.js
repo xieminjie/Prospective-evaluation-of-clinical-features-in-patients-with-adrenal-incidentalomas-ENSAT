@@ -1,8 +1,7 @@
 
 $(document).ready(function(){
-	sentCodeRequest();
+	generateCode();
 });
-
 var getCode = function(length){
 	$.ajax({
             type: "GET",
@@ -10,21 +9,34 @@ var getCode = function(length){
             contentType: 'application/json',
             data:{length:length},
             success: function(r) {
-            	alert("the code of user is: "+r);
+            	$('#codeText').val(r);
             },
             error: function(r){
                 console.log("error");
             }
     });
 }
-var sentCodeRequest = function(){
-	var requestBtn = $('#sendRequest');
-	requestBtn.click(function(){
-		var length = $('#requestVal').val();
+var generateCode = function(){
+	var codeBtn = $('#GenerateCode');
+	codeBtn.click(function(){
+		var length = $('#codeLengthInput').val();
 		if(length){
 			getCode(length);
 		}else{
 			alert('please enter the length of code');
 		}
 	});
+}
+var sendData = function(data){
+	$.ajax({
+            type: "POST",
+            url: "/register",
+            contentType: 'application/json',
+            success: function(r) {
+            	console.log(r);
+            },
+            error: function(r){
+                console.log("error");
+            }
+    });
 }

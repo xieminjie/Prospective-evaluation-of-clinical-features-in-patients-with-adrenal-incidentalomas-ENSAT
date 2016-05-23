@@ -33,7 +33,6 @@ public class HttpManager {
             if(p.getMethod().equals("POST")){
                 con.setDoOutput(true);//allow output some content on body request
                 con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-               // OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());
                 JSONObject jsonObject = new JSONObject(p.getJsonData());
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(con.getOutputStream()));
                 Log.d("myData", jsonObject.toString());

@@ -20,7 +20,7 @@
 		<div id="navbar" class="navbar-collapse collapse">
 		  <ul class="nav navbar-nav navbar-right">
 			<li><a href="/">Dashboard</a></li>
-			<li><a href="/addPatient">Add patient</a></li>
+			<li><a href="/patient">Patient</a></li>
 			<li><a href="#">Help</a></li>
 		  </ul>
 		</div>
@@ -32,38 +32,39 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">Add New Patient<span class="sr-only">(current)</span></a></li>
-					<li ><a href="/patientStatisitc">Patient Statistic<span class="sr-only">(current)</span></a></li>
+					<li><a href="/patient">Add New Patient<span class="sr-only">(current)</span></a></li>
+					<li class="active"><a href="#">Patient Statistic<span class="sr-only">(current)</span></a></li>
 					<li ><a href="#">Patient Query<span class="sr-only">(current)</span></a></li>
 				</ul>
-		</div>
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h1 class="page-header">Patient</h1>
-			<h4>Add New Patient</h2>
-			<div id="addPatientContainer" class="container col-md-5">
-				<div class="row">
-					<h5>Code length</h5>
-					<input type="text" id="codeLengthInput" class="form-control" placeholder="Code length">
-					<button type="reset" id="GenerateCode" class="btn btn-default" id="sendRequest">Generate Code</button>
-					<form role="form" action="/register" method="POST" id="patientForm">
-						<input name = "age" type="text" class="ageInput form-control" placeholder="Age">
-						<div class="radio">
-					     	<label><input type="radio" name="sex" value="male">Male</label>
-							<label><input type="radio" name="sex" value="female">Female</label>
-						</div>
-						<h5>Diagnosis</h5>
-						<textarea name ="diagnosis" class="form-control" rows="5" id="diagnosisText"></textarea>
-						<h5>User Code</h5>
-						<input name="iduser" type="text" id="codeText" class="form-control" placeholder="Code">
-					</form>
-					<button type="submit" id="addPatientBtn" form="patientForm" class="btn btn-default" id="sendRequest">Add Patient</button>
-				</div>
 			</div>
 		</div>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<h1 class="page-header">Patient Statistic</h1>
+			<h4>Overal Patient Information</h4>
+			<div class="overalDiv">
+				<div class="col-sm-4">
+					<p>Overal amount of patient</p>
+					<p class="number-overal">0</p>
+				</div>
+				<div class="col-sm-4">
+					<p>Overal amount of male</p>
+					<p class="number-male">0</p>
+				</div>
+				<div class="col-sm-4">
+					<p>Overal amount of female</p>
+					<p class="number-female">0</p>
+				</div>
+			</div>
+			<h4>Patient Classification</h4>
+			<div class="container col-md-4">
+				<div id="genderChart"></div>
+			</div>
+			</div>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	<script src="http://code.highcharts.com/highcharts.js"></script>
 	<script src="http://localhost:3000/js/patient.js" type="text/javascript"></script>
+	<script src="http://localhost:3000/js/patientStastic.js" type="text/javascript"></script>
 	</body>
 </html>
