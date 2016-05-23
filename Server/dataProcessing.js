@@ -33,9 +33,9 @@ var exports = module.exports = {
 
         var msg;
         var dataObject = new Object();
-  			for(var i in result){
-    		    weightgainOveral+= result[i].weight_gain;
-    		    palpitationsOveral += result[i].palpitations;
+  		for(var i in result){
+    		weightgainOveral+= result[i].weight_gain;
+    		palpitationsOveral += result[i].palpitations;
             highBloodOveral += result[i].high_blood_pressure;
             muscleweaknessOveral +=result[i].muscle_weakness;
             sweatingOveral += result[i].sweating;
@@ -48,9 +48,9 @@ var exports = module.exports = {
             panicOveral += result[i].panic;
             sadnessOveral+= result[i].sadness;
             bodyHairGrowthOveal+= result[i].body_hair_growth;
-    	    }
-  			weightgainAverage = Math.floor(weightgainOveral/count);
-  			palpitationsAverage = Math.floor(palpitationsOveral/count);
+    	}
+  		weightgainAverage = Math.floor(weightgainOveral/count);
+  		palpitationsAverage = Math.floor(palpitationsOveral/count);
         highBloodAverage = Math.floor(highBloodOveral/count);
         muscleweaknessAverage = Math.floor(muscleweaknessOveral/count);
         sweatingAverage = Math.floor(sweatingOveral/count);

@@ -93,7 +93,7 @@ app.post('/register?',function(req,res){
 app.get('/comparison?',function(req,res){
 	var msg = req.query['query'];
 	console.log('query '+msg);
-	connection.query('SELECT * FROM research.record;',function(err,result){
+	connection.query('SELECT * FROM research.record',function(err,result){
 		if(err) {
 				console.log('err');
 				throw err;
@@ -217,6 +217,21 @@ app.get('/singlePatientQuery?',function(req,res){
 		else {
 			console.log(result);
 			res.send(result);
+		}
+	});
+});
+app.get('/singlePatientDataQuery?',function(req,res){
+	var iduser = req.query['iduser'];
+	console.log(iduser);
+	var queryRecord = connection.query('SELECT * FROM research.record where user_record = ?',iduser,function(err,result){
+		if(err) {
+			console.log('err');
+			throw err;
+		}
+		else {
+			var data  = dataProcessing.chartGraphdataProcessing(result);
+			console.log(data);
+			res.send(data);
 		}
 	});
 });
