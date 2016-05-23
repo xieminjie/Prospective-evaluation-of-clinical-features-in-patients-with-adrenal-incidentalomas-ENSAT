@@ -69,7 +69,7 @@ body {
   border-radius: 50%;
 }
 
-.register input,#addPatientBtn,#codeLengthInput,#GenerateCode,.ageInput{
+.register input,#addPatientBtn,#codeLengthInput,#GenerateCode,.ageInput,#searchPatient,#patientQueryBtn{
 	margin-top: 10px;
 }
 
@@ -99,6 +99,9 @@ body {
 }
 .number-overal,.number-male,.number-female{
 	font-size: 40px;
+}
+#tableDiv{
+	display: none;
 }
 
 

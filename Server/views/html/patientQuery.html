@@ -33,41 +33,42 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
 					<li><a href="/patient">Add New Patient<span class="sr-only">(current)</span></a></li>
-					<li class="active"><a href="#">Patient Statistic<span class="sr-only">(current)</span></a></li>
-					<li ><a href="/patientQuery">Patient Query<span class="sr-only">(current)</span></a></li>
+					<li><a href="/patientStatisitc">Patient Statistic<span class="sr-only">(current)</span></a></li>
+					<li class="active"><a href="#">Patient Query<span class="sr-only">(current)</span></a></li>
 				</ul>
 			</div>
 		</div>
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h1 class="page-header">Patient Statistic</h1>
-			<h4>Overal Patient Information</h4>
-			<div class="overalDiv">
-				<div class="col-sm-4">
-					<p>Overal amount of patients</p>
-					<p class="number-overal">0</p>
+		<div class="container">	
+			<div class="row">
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+					<h1 class="page-header">Patient Query</h1>
+					<h4>Patient ID Search</h4>
+					<input id = "iduserinput" name="iduser" type="text" class="form-control" placeholder="Code">
+					<button type="submit" form="patientForm" class="btn btn-default" id="patientQueryBtn">Search Patient</button>					
 				</div>
-				<div class="col-sm-4">
-					<p>Overal amount of male</p>
-					<p class="number-male">0</p>
-				</div>
-				<div class="col-sm-4">
-					<p>Overal amount of female</p>
-					<p class="number-female">0</p>
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tableDiv">
+					<div class="table">
+						<table class="table table-bordered">
+							<thead>
+							    <tr>
+							    	<th>userID</th>
+								    <th>sex</th>
+								    <th>age</th>
+							        <th>diagnosis</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>	
+					</div>
 				</div>
 			</div>
-			<h4>Patient Classification</h4>
-			<div id="genderChart" class="col-md-5">
-			</div>
-			<div class="col-md-2">
-			</div>
-			<div id="ageChart" class="col-md-5"></div>
-											
 		</div>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	<script src="http://code.highcharts.com/highcharts.js"></script>
-	<script src="http://localhost:3000/js/patient.js" type="text/javascript"></script>
-	<script src="http://localhost:3000/js/patientStastic.js" type="text/javascript"></script>
+	<script src="http://localhost:3000/js/patientQuery.js" type="text/javascript"></script>
 	</body>
 </html>

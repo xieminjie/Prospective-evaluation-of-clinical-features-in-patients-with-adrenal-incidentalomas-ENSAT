@@ -29,7 +29,10 @@ app.get('/patient',function(req,res){
 	res.sendFile(__dirname+'/views/html/patient.html');
 })
 app.get('/patientStatisitc',function(req,res){
-	res.sendFile(__dirname+'/views/html/patientStastic.html')
+	res.sendFile(__dirname+'/views/html/patientStastic.html');
+});
+app.get('/patientQuery',function(req,res){
+	res.sendFile(__dirname+'/views/html/patientQuery.html');
 });
 app.get('/data',function(req,res){
 	connection.query('SELECT * FROM research.record;',function(err,result){
@@ -156,7 +159,6 @@ app.post('/survey',function(req,res){
 	});
 });
 app.get('/genderStastic?',function(req,res){
-	var gender = req.query['gender'];
 	var male = null;
 	var female = null;
 	var queryMale = connection.query('SELECT COUNT(iduser) as count from user where sex = ?','female',function(err,result){
@@ -185,8 +187,39 @@ app.get('/genderStastic?',function(req,res){
 	});
 });
 
-app.get('/ageStastic?',function(req,res){});
+app.get('/ageStastic?',function(req,res){
+	var min = req.query['minAge'].toString();
+	var max = req.query['maxAge'].toString();
+	var queryAge = connection.query("SELECT COUNT(iduser) as count from user where user.age >= ? AND user.age < ?",[min,max],function(err,result){
+		if(err) {
+			console.log('err');
+			throw err;
+		}
+		else {
+			var result = {
+				minAge:min,
+				ageCount:result
+			}
+			var msg = JSON.stringify(result);
+			res.send(msg);
+		}
+	});
+});
 
+app.get('/singlePatientQuery?',function(req,res){
+	var iduser = req.query['iduser'];
+	console.log(iduser);
+	var queryPatient = connection.query('SELECT * FROM research.user where iduser = ?',iduser,function(err,result){
+		if(err) {
+			console.log('err');
+			throw err;
+		}
+		else {
+			console.log(result);
+			res.send(result);
+		}
+	});
+});
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
