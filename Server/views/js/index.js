@@ -17,20 +17,7 @@ var loadData = function(){
             }
     });
 }
-var getCode = function(length){
-	$.ajax({
-            type: "GET",
-            url: "/userCode",
-            contentType: 'application/json',
-            data:{length:length},
-            success: function(r) {
-            	alert("the code of user is: "+r);
-            },
-            error: function(r){
-                console.log("error");
-            }
-    });
-}
+
 var processData= function(msg){
 	var title = 'patientData';
 	var ytitle = 'point';

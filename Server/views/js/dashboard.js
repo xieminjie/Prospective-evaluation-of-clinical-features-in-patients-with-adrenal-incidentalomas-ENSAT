@@ -1,7 +1,6 @@
 
 $(document).ready(function(){
 	loadData();
-	sentCodeRequest();
 });
 var loadData = function(){
 	$.ajax({
@@ -18,19 +17,20 @@ var loadData = function(){
     });
 }
 var processData= function(msg){
-	var title = 'patientData';
+	var title = 'Overal Data Chart';
 	var ytitle = 'point';
 	var categoriesArray = ['weight_gain','palpitations','muscle_weakness',
 		'sweating','flushing','headache','chest_pain','back_pain','bruising',
-		'fatigue','panic','sadness','body_hair_growth'];
+		'fatigue','panic','sadness'];
 	var data = JSON.parse(msg);
 	var dataArray =  [data.weight_gain,data.palpitations,data.muscle_weakness,data.sweating,
 	data.flushing,data.headache,data.chest_pain,data.back_pain,data.bruising,data.fatigue,
-	data.panic,data.sadness,data.body_hair_growth];
+	data.panic,data.sadness];
 	var aName = 'Patient data';
 	var value = [{
 		name: aName,
-		data: dataArray
+		data: dataArray,
+		color:'#009688'
 	}];
 	renderBarChart(categoriesArray,value,title,ytitle);
 }

@@ -68,3 +68,49 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+.register input,#addPatientBtn,#codeLengthInput,#GenerateCode,.ageInput,#searchPatient,#patientQueryBtn{
+	margin-top: 10px;
+}
+
+.overalDiv{
+	background: #ededed;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	height: 150px;
+	padding-left:100px;
+	padding-right: 100px;
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+.overalDiv .Overal{
+	float: left;
+	width: 100px;
+	height: 100px;
+	margin-left:120px;
+	background-color: #666666;
+}
+.overalDiv .Overal p{
+	font-size: 100px;
+	color:white;
+}
+.overalDiv p{
+	text-align: center;
+}
+.number-overal,.number-male,.number-female{
+	font-size: 40px;
+}
+#tableDiv{
+	display: none;
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -28,6 +28,18 @@ app.get('/',function(req,res){
 app.get('/patient',function(req,res){
 	res.sendFile(__dirname+'/views/html/patient.html');
 })
+app.get('/patientStatisitc',function(req,res){
+	res.sendFile(__dirname+'/views/html/patientStastic.html');
+});
+app.get('/patientQuery',function(req,res){
+	res.sendFile(__dirname+'/views/html/patientQuery.html');
+});
+app.get('/instant',function(req,res){
+	res.sendFile(__dirname+'/views/html/dashboard_instant.html');
+});
+app.get('/history',function(req,res){
+	res.sendFile(__dirname+'/views/html/dashboard_history.html')
+});
 app.get('/data',function(req,res){
 	connection.query('SELECT * FROM research.record;',function(err,result){
 		if(err) {
@@ -50,9 +62,6 @@ app.get('/userCode',function(req,res){
 		var code = randomstring.generate(parseInt(length));
 		res.send(code);
 	}
-	console.log('user')
-	console.log(req.body);
-	console.log(req.query['length']);
 ;});
 //app login route 
 app.get('/login?',function(req,res){
@@ -64,7 +73,6 @@ app.get('/login?',function(req,res){
 				throw err;
 			}
 			else {
-				console.log('length'+result.length);
 				var ifAuth;
 				var resultReply = {
 					status:true,
@@ -78,10 +86,20 @@ app.get('/login?',function(req,res){
 		});
 	}
 });
+app.post('/register?',function(req,res){
+	var msg = req.body;
+	var query = connection.query('insert into user set ?',msg, function (err, result) {
+		if (err) {
+			console.error(err);
+			return;
+		}
+		console.error(result);
+	});
+});
 app.get('/comparison?',function(req,res){
 	var msg = req.query['query'];
 	console.log('query '+msg);
-	connection.query('SELECT * FROM research.record;',function(err,result){
+	connection.query('SELECT * FROM research.record',function(err,result){
 		if(err) {
 				console.log('err');
 				throw err;
@@ -137,10 +155,7 @@ app.get('/comparison?',function(req,res){
 });
 
 app.post('/survey',function(req,res){
-	//var query = req.query['survey'];
-	//var message = JSON.parse(query);
 	var message = req.body;
-	console.log(message);
 	var query = connection.query('insert into record set ?',message, function (err, result) {
 		if (err) {
 			console.error(err);
@@ -149,8 +164,108 @@ app.post('/survey',function(req,res){
 		console.error(result);
 	});
 });
+app.get('/genderStastic?',function(req,res){
+	var male = null;
+	var female = null;
+	var queryMale = connection.query('SELECT COUNT(iduser) as count from user where sex = ?','female',function(err,result){
+			if(err) {
+				console.log('err');
+				throw err;
+			}
+			else {
+				female = result[0].count;
+					var queryMale = connection.query('SELECT COUNT(iduser) as count from user where sex = ?','male',function(err,result){
+						if(err) {
+							console.log('err');
+							throw err;
+						}
+						else {
+							male = result[0].count;
+							var reply = {
+								male:male,
+								female:female
+							}
+							var msg = JSON.stringify(reply);
+							res.send(msg);
+						}
+				});
+			}
+	});
+});
 
+app.get('/ageStastic?',function(req,res){
+	var min = req.query['minAge'].toString();
+	var max = req.query['maxAge'].toString();
+	var queryAge = connection.query("SELECT COUNT(iduser) as count from user where user.age >= ? AND user.age < ?",[min,max],function(err,result){
+		if(err) {
+			console.log('err');
+			throw err;
+		}
+		else {
+			var result = {
+				minAge:min,
+				ageCount:result
+			}
+			var msg = JSON.stringify(result);
+			res.send(msg);
+		}
+	});
+});
 
+app.get('/singlePatientQuery?',function(req,res){
+	var iduser = req.query['iduser'];
+	console.log(iduser);
+	var queryPatient = connection.query('SELECT * FROM research.user where iduser = ?',iduser,function(err,result){
+		if(err) {
+			console.log('err');
+			throw err;
+		}
+		else {
+			console.log(result);
+			res.send(result);
+		}
+	});
+});
+app.get('/singlePatientDataQuery?',function(req,res){
+	var iduser = req.query['iduser'];
+	console.log(iduser);
+	var queryRecord = connection.query('SELECT * FROM research.record where user_record = ?',iduser,function(err,result){
+		if(err) {
+			console.log('err');
+			throw err;
+		}
+		else {
+			var data  = dataProcessing.chartGraphdataProcessing(result);
+			console.log(data);
+			res.send(data);
+		}
+	});
+});
+app.get('/getInstantOveralData?',function(req,res){
+	var queryRecord = connection.query('SELECT * FROM research.record where record_date = CURDATE()',function(err,result){
+		if(err) {
+			console.log('err');
+			throw err;
+		}
+		else {
+			var msg = dataProcessing.instantDataHandler(result);
+			console.log(msg);
+			res.send(msg);
+		}
+	});
+});
+app.get('/getAllData?',function(req,res){
+	var queryRecord = connection.query('SELECT * FROM research.record',function(err,result){
+		if(err) {
+			console.log('err');
+			throw err;
+		}
+		else {
+			var msg = dataProcessing.historyDataHander(result);
+			res.send(msg);
+		}
+	});
+});
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
