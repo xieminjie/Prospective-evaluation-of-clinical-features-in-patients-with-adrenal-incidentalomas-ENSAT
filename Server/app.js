@@ -35,7 +35,10 @@ app.get('/patientQuery',function(req,res){
 	res.sendFile(__dirname+'/views/html/patientQuery.html');
 });
 app.get('/instant',function(req,res){
-	res.sendFile(__dirname+'/views/html/dashboard_instant.html')
+	res.sendFile(__dirname+'/views/html/dashboard_instant.html');
+});
+app.get('/history',function(req,res){
+	res.sendFile(__dirname+'/views/html/dashboard_history.html')
 });
 app.get('/data',function(req,res){
 	connection.query('SELECT * FROM research.record;',function(err,result){
@@ -247,6 +250,18 @@ app.get('/getInstantOveralData?',function(req,res){
 		else {
 			var msg = dataProcessing.instantDataHandler(result);
 			console.log(msg);
+			res.send(msg);
+		}
+	});
+});
+app.get('/getAllData?',function(req,res){
+	var queryRecord = connection.query('SELECT * FROM research.record',function(err,result){
+		if(err) {
+			console.log('err');
+			throw err;
+		}
+		else {
+			var msg = dataProcessing.historyDataHander(result);
 			res.send(msg);
 		}
 	});

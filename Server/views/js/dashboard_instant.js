@@ -1,7 +1,7 @@
 $(document).ready(function(){
-	getDataData();
+	getData();
 });
-var getDataData = function(){
+var getData = function(){
     $.ajax({
     	type:'GET',
     	url:'/getInstantOveralData',
@@ -11,13 +11,17 @@ var getDataData = function(){
     	success:function(result){
             var count = result.number;
             var data = result.data;
-            
+            updateData(count);
             processData(data);
     	},
     	error:function(result){
     		console.log("error");
     	}
     });
+}
+var updateData= function(count){
+    var countText = $('.number-overal');
+    countText.text(count);
 }
 Date.prototype.yyyymmdd = function() {
    var yyyy = this.getFullYear().toString();
