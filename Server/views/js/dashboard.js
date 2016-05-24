@@ -1,7 +1,6 @@
 
 $(document).ready(function(){
 	loadData();
-	sentCodeRequest();
 });
 var loadData = function(){
 	$.ajax({
@@ -30,7 +29,8 @@ var processData= function(msg){
 	var aName = 'Patient data';
 	var value = [{
 		name: aName,
-		data: dataArray
+		data: dataArray,
+		color:'#009688'
 	}];
 	renderBarChart(categoriesArray,value,title,ytitle);
 }

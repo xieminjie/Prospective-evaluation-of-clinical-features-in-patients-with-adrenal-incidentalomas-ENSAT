@@ -34,6 +34,9 @@ app.get('/patientStatisitc',function(req,res){
 app.get('/patientQuery',function(req,res){
 	res.sendFile(__dirname+'/views/html/patientQuery.html');
 });
+app.get('/instant',function(req,res){
+	res.sendFile(__dirname+'/views/html/dashboard_instant.html')
+});
 app.get('/data',function(req,res){
 	connection.query('SELECT * FROM research.record;',function(err,result){
 		if(err) {
@@ -235,7 +238,19 @@ app.get('/singlePatientDataQuery?',function(req,res){
 		}
 	});
 });
-
+app.get('/getInstantOveralData?',function(req,res){
+	var queryRecord = connection.query('SELECT * FROM research.record where record_date = CURDATE()',function(err,result){
+		if(err) {
+			console.log('err');
+			throw err;
+		}
+		else {
+			var msg = dataProcessing.instantDataHandler(result);
+			console.log(msg);
+			res.send(msg);
+		}
+	});
+});
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });

@@ -80,5 +80,18 @@ var exports = module.exports = {
         dataObject.body_hair_growth = bodyHairGrowthAverage;
         msg = JSON.stringify(dataObject);
   		return msg;
-	}
+	},
+    historyDataHander:function(result){
+    },
+
+    instantDataHandler:function(result){
+        var number = result.length;
+        var data = JSON.parse(module.exports.chartGraphdataProcessing(result));
+        console.log(data);
+        var msg = {
+            number:number,
+            data:data
+        }
+        return msg;
+    }
 };
