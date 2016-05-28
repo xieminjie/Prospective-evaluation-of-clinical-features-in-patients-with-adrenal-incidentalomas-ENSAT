@@ -21,8 +21,7 @@ Server:
 1.npm install // Install the libraries
 2.node app.js // Execute server
 3.http://localhost:3000 // Access server 
-4. Access Server:
-http://localhost:3000
+
 
 MySQL
 1. Install MySQL database in local system (sudo apt-get install mysql-server // for ubuntu/linux)
