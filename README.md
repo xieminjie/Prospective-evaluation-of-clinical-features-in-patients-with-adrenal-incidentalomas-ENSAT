@@ -13,21 +13,21 @@ mobile application for retrieving patient daily report and data visualisation fo
 research of adrenal tumours. 
 
 System Deployment:
-- Android applicaton:
+Android applicaton:
 Suggested using android studio to open the folder of android
 
-- Server:
-1. npm install // Install the libraries
-2. node app.js // Execute server
-3. http://localhost:3000 // Access server 
+Server:
+npm install // Install the libraries
+node app.js // Execute server
+http://localhost:3000 // Access server 
 Install Server: 
-- npm install
+npm install
 Execute Server:
-- node app.js
+node app.js
 Access Server:
 http://localhost:3000
 
--MySQL
+MySQL
 1. Install MySQL database in local system (sudo apt-get install mysql-server // for ubuntu/linux)
 2. Execute research.sql to build up project database
 
