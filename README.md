@@ -13,18 +13,15 @@ mobile application for retrieving patient daily report and data visualisation fo
 research of adrenal tumours. 
 
 System Deployment:
+
 Android applicaton:
-Suggested using android studio to open the folder of android
+1.Suggested using android studio to open the folder of android
 
 Server:
-npm install // Install the libraries
-node app.js // Execute server
-http://localhost:3000 // Access server 
-Install Server: 
-npm install
-Execute Server:
-node app.js
-Access Server:
+1.npm install // Install the libraries
+2.node app.js // Execute server
+3.http://localhost:3000 // Access server 
+4. Access Server:
 http://localhost:3000
 
 MySQL
