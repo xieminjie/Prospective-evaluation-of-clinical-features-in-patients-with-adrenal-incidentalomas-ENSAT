@@ -1,28 +1,16 @@
 package com.example.xieminjie.clientapp;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 public class OverallData extends AppCompatActivity {
     private Toolbar toolbar;
-    private ClientApplication app;
-    private Socket socket;
     private Gson gson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +24,10 @@ public class OverallData extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        app = (ClientApplication)getApplication();
-        socket = app.getSocket();
-        socket.emit("app client request overall data","overall");
-        socket.on("receive overall search", dataReply);
-        socket.connect();
-        //TODO
-        //send request to server
     }
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        socket.disconnect();
     }
     private Emitter.Listener dataReply = new Emitter.Listener() {
         @Override

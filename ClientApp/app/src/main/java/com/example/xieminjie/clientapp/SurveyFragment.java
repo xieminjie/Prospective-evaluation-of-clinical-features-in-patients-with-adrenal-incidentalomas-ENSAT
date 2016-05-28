@@ -1,9 +1,9 @@
 package com.example.xieminjie.clientapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,11 +16,11 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-import io.socket.client.Socket;
 
 public class SurveyFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -40,7 +40,7 @@ public class SurveyFragment extends Fragment {
     boolean ifDone;
     private ArrayList<Record> arrayList;
     private Message message;
-    private Socket socket;
+    private String record_date;
     // TODO: Rename and change types and number of parameters
     public static SurveyFragment newInstance(String param1, String param2) {
         SurveyFragment fragment = new SurveyFragment();
@@ -59,10 +59,6 @@ public class SurveyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        ClientApplication app = (ClientApplication)getActivity().getApplication();
-        socket = app.getSocket();
-        socket.connect();
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -111,14 +107,21 @@ public class SurveyFragment extends Fragment {
 
     private void startToSendDate(){
         String user_record = IOStorageHandler.readUserID("user", getContext());
-        message = new Message(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,user_record);
+        record_date = DateHandler.getCurrentData();
+        message = new Message(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,user_record,record_date);
         String json = ConvertToJson(message);
         IOStorageHandler.printRecordLog("record.csv", message, getContext());
-        sendData(json, socket);
         backtoMain();
+        NetworkHandler myTask = new NetworkHandler();
+        RequestPackage requestPackage = new RequestPackage();
+        requestPackage.setMethod("POST");
+        requestPackage.setUri(Params.CHAT_SERVER_URL + "/survey");
+        requestPackage.setJsonData(json);
+        myTask.execute(requestPackage);
     }
     private void backtoMain(){
         Intent intent = new Intent(getActivity(), TabbedDrawer.class);
+        Log.d("myData","backToMain");
         startActivity(intent);
     }
     private String ConvertToJson (Message message){
@@ -126,10 +129,6 @@ public class SurveyFragment extends Fragment {
         Gson gson = new Gson();
         str = gson.toJson(message);
         return str;
-    }
-
-    private void sendData(String str, Socket socket){
-        socket.emit("send question Data", str);
     }
     // UI for have done survey today
 
@@ -157,6 +156,7 @@ public class SurveyFragment extends Fragment {
     public TextView createText (Activity activity){
         TextView textView = new TextView(activity);
         textView.setText("You have already finished the survey today");
+        textView.setPadding(130,600,0,0);
         return textView;
     }
     public Button createProblemBtn (Activity activity){
@@ -168,6 +168,26 @@ public class SurveyFragment extends Fragment {
         Button noproblemBtn = new Button(activity);
         noproblemBtn.setText("No");
         return noproblemBtn;
+    }
+    private class NetworkHandler extends AsyncTask<RequestPackage,String,String> {
+        //has access to Main thread
+        @Override
+        protected void onPreExecute(){
+            //do before task doing in background
+        }
+        @Override
+        protected String doInBackground(RequestPackage... strings) {
+            String data = HttpManager.getData(strings[0]);
+            return data;
+        }
+        @Override
+        protected void onPostExecute(String result){
+            if(result==null){
+                Log.d("myData", "null");
+            } else {
+                Log.d("myData",result);
+            }
+        }
     }
 
 }

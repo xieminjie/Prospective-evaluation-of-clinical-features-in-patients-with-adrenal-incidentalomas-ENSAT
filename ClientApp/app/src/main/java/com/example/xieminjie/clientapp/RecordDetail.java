@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
@@ -13,7 +12,6 @@ import android.widget.SearchView;
 import com.github.mikephil.charting.charts.BarChart;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 public class RecordDetail extends AppCompatActivity implements SearchView.OnQueryTextListener{
     private Toolbar toolbar;

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 
 public class RecordFragment extends Fragment {
@@ -64,6 +61,7 @@ public class RecordFragment extends Fragment {
     private LinearLayout createMyll(Activity activity){
         LinearLayout ll = createll(activity);
         final EditText editText = createText(activity);
+        final TextView textView = createaText(activity);
         Button button = createButton(activity);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,13 +69,14 @@ public class RecordFragment extends Fragment {
                 startToShow(editText.getText().toString());
             }
         });
+        ll.addView(textView);
         ll.addView(editText);
         ll.addView(button);
         return ll;
     }
     private void startToShow(String msg){
         Intent intent = new Intent(getActivity(), RecordDetail.class);
-        intent.putExtra("searchName",msg);
+        intent.putExtra("searchName", msg);
         startActivity(intent);
     }
     // TODO: Rename method, update argument and hook method into UI event
@@ -97,11 +96,18 @@ public class RecordFragment extends Fragment {
         EditText textView = new EditText(activity);
         return textView;
     }
+    public TextView createaText (Activity activity){
+        TextView textView = new TextView(activity);
+        textView.setText("Please enter the item");
+        textView.setPadding(0,450,0,0);
+        return textView;
+    }
     public Button createButton (Activity activity){
         Button problemBtn = new Button(activity);
         problemBtn.setText("Confirm");
         return problemBtn;
     }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
