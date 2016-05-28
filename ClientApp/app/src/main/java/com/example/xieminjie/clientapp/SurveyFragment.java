@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.AbstractCollection;
 import java.util.ArrayList;
 
 
@@ -94,12 +95,14 @@ public class SurveyFragment extends Fragment {
             }
         });
         Button npBtn = createnoProblemBtn(activity);
+        TextView textView = createaText(activity);
         npBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startToSendDate();
             }
         });
+        ll.addView(textView);
         ll.addView(pBtn);
         ll.addView(npBtn);
         return ll;
@@ -168,6 +171,12 @@ public class SurveyFragment extends Fragment {
         Button noproblemBtn = new Button(activity);
         noproblemBtn.setText("No");
         return noproblemBtn;
+    }
+    public TextView createaText (Activity acitvty){
+        TextView textView = new TextView(acitvty);
+        textView.setText("Do you have a health problem today");
+        textView.setPadding(130,450,0,0);
+        return textView;
     }
     private class NetworkHandler extends AsyncTask<RequestPackage,String,String> {
         //has access to Main thread
