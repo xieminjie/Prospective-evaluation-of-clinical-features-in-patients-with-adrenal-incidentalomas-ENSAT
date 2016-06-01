@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Created by xieminjie on 13/04/2016.
+ * Create charts
  */
 public class ChartHandler {
     public void createChart(BarChart barChart,String query,ArrayList<String> dateArray,ArrayList<String> dataArray){

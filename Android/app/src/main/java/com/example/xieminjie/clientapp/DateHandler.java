@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 /**
  * Created by xieminjie on 20/03/2016.
+ * Get current date
  */
 public abstract class DateHandler {
 

@@ -18,6 +18,7 @@ import java.util.Objects;
 
 /**
  * Created by xieminjie on 20/05/2016.
+ * Connect with server
  */
 public class HttpManager {
     public static String getData(RequestPackage p){
