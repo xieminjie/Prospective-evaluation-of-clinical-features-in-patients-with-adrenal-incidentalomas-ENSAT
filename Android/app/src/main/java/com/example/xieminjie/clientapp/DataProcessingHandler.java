@@ -10,6 +10,7 @@ import java.util.Hashtable;
  * Created by xieminjie on 13/04/2016.
  */
 public abstract class DataProcessingHandler {
+    // get data of past 5 days
     public static ArrayList<String> dateProcessing(ArrayList a){
         ArrayList<String> array = new ArrayList<>();
         if(a.size()<=5){
@@ -23,6 +24,7 @@ public abstract class DataProcessingHandler {
         }
         return array;
     }
+    // Get index of data in data array
     public static int getIndex(String query){
         Hashtable<String,String> hashtable = new Hashtable();
         int index = 0;

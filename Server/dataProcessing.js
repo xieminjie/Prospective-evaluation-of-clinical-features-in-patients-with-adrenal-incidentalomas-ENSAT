@@ -1,5 +1,5 @@
 var exports = module.exports = {
-
+    //calculate overall averate data
 	chartGraphdataProcessing:function(result){
 		var count = result.length;
   		var weightgainOveral = 0;
@@ -105,7 +105,7 @@ var exports = module.exports = {
         }
         return msg;
     },
-
+    // get mindata
     getMinDataHandler:function(result){
         var weightgainMin= 100;
         var palpitationsMin = 100;
@@ -191,7 +191,7 @@ var exports = module.exports = {
         dataObject.sadness = sadnessMin;
         msg = JSON.stringify(dataObject);
         return msg;
-    },
+    },// get max data
     getMaxDataHandler:function(result){
         var weightgainMax= 0;
         var palpitationsMax = 0;

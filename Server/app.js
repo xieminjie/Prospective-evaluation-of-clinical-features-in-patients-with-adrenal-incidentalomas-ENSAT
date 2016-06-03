@@ -86,6 +86,7 @@ app.get('/login?',function(req,res){
 		});
 	}
 });
+// register new patient
 app.post('/register?',function(req,res){
 	var msg = req.body;
 	var query = connection.query('insert into user set ?',msg, function (err, result) {
@@ -96,6 +97,7 @@ app.post('/register?',function(req,res){
 		console.error(result);
 	});
 });
+// request comparison date from andriod app
 app.get('/comparison?',function(req,res){
 	var msg = req.query['query'];
 	console.log('query '+msg);
@@ -153,7 +155,7 @@ app.get('/comparison?',function(req,res){
 			}
 	 });
 });
-
+// get new survey route
 app.post('/survey',function(req,res){
 	var message = req.body;
 	var query = connection.query('insert into record set ?',message, function (err, result) {
@@ -164,6 +166,7 @@ app.post('/survey',function(req,res){
 		console.error(result);
 	});
 });
+//get gender stastic route 
 app.get('/genderStastic?',function(req,res){
 	var male = null;
 	var female = null;
@@ -211,7 +214,7 @@ app.get('/ageStastic?',function(req,res){
 		}
 	});
 });
-
+// get single patient information route 
 app.get('/singlePatientQuery?',function(req,res){
 	var iduser = req.query['iduser'];
 	console.log(iduser);
@@ -226,6 +229,7 @@ app.get('/singlePatientQuery?',function(req,res){
 		}
 	});
 });
+// get single patient data route 
 app.get('/singlePatientDataQuery?',function(req,res){
 	var iduser = req.query['iduser'];
 	console.log(iduser);
@@ -241,6 +245,7 @@ app.get('/singlePatientDataQuery?',function(req,res){
 		}
 	});
 });
+// get instant data route 
 app.get('/getInstantOveralData?',function(req,res){
 	var queryRecord = connection.query('SELECT * FROM research.record where record_date = CURDATE()',function(err,result){
 		if(err) {
@@ -254,6 +259,7 @@ app.get('/getInstantOveralData?',function(req,res){
 		}
 	});
 });
+// get overall data route 
 app.get('/getAllData?',function(req,res){
 	var queryRecord = connection.query('SELECT * FROM research.record',function(err,result){
 		if(err) {
